@@ -1,0 +1,20 @@
+{
+  "name": "ebouvier/camagru",
+  "description": "fuck u",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Elliot Bouvier",
+      "email": "elliotbouvier@protonmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Camagru\\": "src"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true
+  }
+}
