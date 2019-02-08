@@ -12,7 +12,7 @@ use PDO;
 
 /**
  * Class Database
- * @package Camagru\Services\Database
+ * @package Camagru\Service\Database
  */
 class Database
 {
@@ -20,6 +20,7 @@ class Database
     protected $dbName;
     protected $username;
     protected $password;
+    private $pdo = null;
 
     /**
      * Database constructor.
@@ -34,19 +35,20 @@ class Database
         $this->host = $host;
         $this->dbName = $dbName;
         $this->password = $password;
+
     }
 
     /**
      * @return PDO
      */
-    private function connect()
+    public function getConnection()
     {
         try {
-            $pdo = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=utf8', $this->username, $this->password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=utf8', $this->username, $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage());
         }
-        return $pdo;
+        return $this->pdo;
     }
 }
