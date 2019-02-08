@@ -19,7 +19,6 @@ class View
      */
     public static function render($view, $args = [])
     {
-        ob_start();
         extract($args, EXTR_SKIP);
         $file = dirname(__DIR__) . "/../View/$view";
         if (is_readable($file)) {
