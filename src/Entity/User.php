@@ -8,18 +8,46 @@
 
 namespace Camagru\Entity;
 
-use Camagru\Services\Database\Database;
-
-class User extends Database
+class User
 {
+    private $id;
     private $username;
     private $password;
     private $email;
     private $verified;
     private $emailHash;
+    private $passwordHash;
+    private $createdAt;
 
-    public function __construct()
+    public function __construct(array $data)
     {
+        $this->hydrate($data);
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -101,5 +129,29 @@ class User extends Database
     public function setEmailHash($emailHash): void
     {
         $this->emailHash = $emailHash;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordHash()
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * @param mixed $passwordHash
+     */
+    public function setPasswordHash($passwordHash): void
+    {
+        $this->passwordHash = $passwordHash;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

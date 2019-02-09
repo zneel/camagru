@@ -9,6 +9,7 @@
 namespace Camagru\Controller;
 
 use Camagru\Services\View\View;
+use Camagru\Service\Form\RegisterForm;
 
 class AuthController
 {
@@ -24,10 +25,10 @@ class AuthController
 
     public function postRegisterAction()
     {
-        var_dump($_POST);
-
-
-        die();
+        if (isset($_POST)) {
+            $registerForm = new RegisterForm();
+            $registerForm->validate($_POST);
+        }
     }
 
     public function postLoginAction()
