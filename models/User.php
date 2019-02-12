@@ -1,12 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ebouvier
+ * UserManager: ebouvier
  * Date: 2019-02-08
  * Time: 20:13
  */
-
-namespace Camagru\Entity;
 
 class User
 {

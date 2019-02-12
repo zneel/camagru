@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="#">
@@ -19,10 +22,10 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-danger" href="register">
+                    <a class="button is-danger" href="register.php">
                         <strong>Inscription</strong>
                     </a>
-                    <a class="button is-warning" href="login">
+                    <a class="button is-warning" href="login.php">
                         Connection
                     </a>
                 </div>

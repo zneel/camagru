@@ -1,13 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ebouvier
+ * UserManager: ebouvier
  * Date: 2019-02-09
  * Time: 16:11
  */
-
-namespace Camagru\Service\Form;
-
 
 interface FormValidator
 {

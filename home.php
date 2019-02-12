@@ -1,10 +1,10 @@
+<?php
+session_start();
+?>
 <html lang="fr">
 <?php require 'head.php' ?>
 <body>
 <?php require 'navbar.php' ?>
-<pre>
-<?php var_dump($data); ?>
-</pre>
 <header class="container">
     <div class="title has-text-centered">
         <h1 class="">Bienvenue sur Catmagru</h1>

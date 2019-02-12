@@ -1,20 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ebouvier
+ * UserManager: ebouvier
  * Date: 2019-02-05
  * Time: 20:27
  */
 
-namespace Camagru\Services\Database;
-
-use PDO;
-
-/**
- * Class Database
- * @package Camagru\Service\Database
- */
-class Database
+class Db
 {
     protected $host;
     protected $dbName;
@@ -23,7 +15,7 @@ class Database
     private $pdo = null;
 
     /**
-     * Database constructor.
+     * Db constructor.
      * @param string $host
      * @param string $dbName
      * @param string $username

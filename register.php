@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <html lang="fr">
 <?php require 'head.php' ?>
 <body>
@@ -9,22 +12,28 @@
                 <h3 class="title has-text-grey">Inscription</h3>
                 <p class="subtitle has-text-grey">Inscrivez vous des maintenant!</p>
                 <div class="box">
-                    <form action="register" method="post">
+                    <form action="actions/register_form.php" method="post">
                         <div class="field">
                             <div class="control">
                                 <input name="username" class="input " type="text" placeholder="Votre pseudo" required
+                                       value="<?php echo isset($_SESSION['form']['reg']) ? $_SESSION['form']['reg']['username']
+                                           : null ?>"
                                        autofocus="">
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
                                 <input name="email" class="input " type="email" placeholder="Votre email" required
+                                       value="<?php echo isset($_SESSION['form']['reg']) ? $_SESSION['form']['reg']['email']
+                                           : null ?>"
                                        autofocus="">
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
                                 <input name="cemail" class="input " type="email" placeholder="Confirmer votre email"
+                                       value="<?php echo isset($_SESSION['form']['reg']) ? $_SESSION['form']['reg']['cemail']
+                                           : null ?>"
                                        required
                                        autofocus="">
                             </div>
@@ -42,16 +51,25 @@
                             </div>
                         </div>
                         <button class="button is-block is-info  is-fullwidth">Inscription</button>
+                        <?php if (!empty($_SESSION['flash']['reg_err'])) {
+                            foreach ($_SESSION['flash']['reg_err'] as $keys) {
+                                echo '<ul>';
+                                foreach ($keys as $key => $val) {
+                                    echo '<li class="has-text-danger has-text-left-desktop">' . $val . '</li>';
+                                }
+                                echo '</ul>';
+                            }
+                        } ?>
                     </form>
                 </div>
                 <p class="has-text-grey">
-                    <a href="login">Connection</a> &nbsp;·&nbsp;
-                    <a href="reset">Mot de passe oublié</a> &nbsp;·&nbsp;
+                    <a href="index.php">Connection</a> &nbsp;·&nbsp;
+                    <a href="index.php">Mot de passe oublié</a> &nbsp;·&nbsp;
                 </p>
             </div>
         </div>
     </div>
 </section>
+<?php require 'footer.php' ?>
 </body>
 </html>
-<?php require 'footer.php' ?>
