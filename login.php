@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 <html lang="fr">
 <?php require 'head.php' ?>
@@ -9,11 +11,11 @@ session_start();
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
-                <?php echo isset($_SESSION['flash']['email']) ? "<p id='mail-notif' class='notification is-primary'><button onclick='hideNotif()' class='delete'></button>
+                <?php echo !empty($_SESSION['flash']['email']) ? "<p id='mail-notif' class='notification is-primary'><button id='delete-button' class='delete'></button>
 " . $_SESSION['flash']['email'] . "</p>" : null ?>
-                <h3 class="title has-text-grey">Connection</h3>
+                <h3 class="title has-text-grey">Connexion</h3>
                 <div class="box">
-                    <form action="index.php" method="post">
+                    <form action="actions/login_form.php" method="post">
                         <div class="field">
                             <div class="control">
                                 <input name="username" class="input is-large" type="text" placeholder="Votre pseudo"
@@ -26,12 +28,15 @@ session_start();
                                        placeholder="Votre mot de passe">
                             </div>
                         </div>
-                        <button class="button is-block is-info  is-fullwidth">Connection</button>
+                        <button class="button is-block is-info  is-fullwidth">Connexion</button>
+                        <?php if (!empty($_SESSION['flash']['log_err'])) {
+                            echo '<p class="has-text-danger has-text-left-desktop">' . $_SESSION['flash']['log_err'] . '</p>';
+                        } ?>
                     </form>
                 </div>
                 <p class="has-text-grey">
-                    <a href="index.php">Inscription</a> &nbsp;·&nbsp;
-                    <a href="index.php">Mot de passe oublié</a> &nbsp;·&nbsp;
+                    <a href="/register.php">Inscription</a> &nbsp;·&nbsp;
+                    <a href="/reset_password.php">Mot de passe oublié</a> &nbsp;·&nbsp;
                 </p>
             </div>
         </div>
@@ -39,9 +44,10 @@ session_start();
     <script>
         document.addEventListener("DOMContentLoaded", function (event) {
             event.preventDefault();
-            const hideNotif = function () {
-                const x = document.getElementById('mail-notif');
-                x.style.display = 'none';
+            const delButton = document.getElementById('delete-button');
+            if (delButton) {
+                document.getElementById('delete-button').addEventListener('click', () => delButton.parentElement.style
+                    .display = 'none');
             }
         });
     </script>
@@ -49,3 +55,4 @@ session_start();
 <?php require 'footer.php' ?>
 </body>
 </html>
+<?php $_SESSION['flash'] = [] ?>

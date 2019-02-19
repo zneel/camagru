@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 <footer class="footer">
     <div class="content has-text-centered">

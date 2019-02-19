@@ -6,8 +6,6 @@
  * Time: 20:19
  */
 
-require_once '../models/Db.php';
-
 class Auth
 {
     private $db;
@@ -17,9 +15,9 @@ class Auth
         $this->db = $db;
     }
 
-    public function authenticate(User $user)
+    public function authenticate(User $user, string $password)
     {
-        $this->db;
+        return password_verify($password, $user->getPassword());
     }
 
     /**
@@ -35,6 +33,11 @@ class Auth
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
+    public function hashEmail(): string
+    {
+        return bin2hex(random_bytes(20));
+    }
+
     public function sendConfirmationEmail(User $user)
     {
         // Préparation du mail contenant le lien d'activation
@@ -47,7 +50,7 @@ class Auth
 Pour activer votre compte, veuillez cliquer sur le lien ci dessous
 ou copier/coller dans votre navigateur internet.
  
-http://localhost:3000/activation.php?login=' . urlencode($user->getUsername()) . '&key=' . urlencode($user->getEmailHash
+http://' . $_SERVER['HTTP_HOST'] . '/activation.php?login=' . urlencode($user->getUsername()) . '&key=' . urlencode($user->getEmailHash
             ()) . '
  
  

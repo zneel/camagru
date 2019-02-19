@@ -12,10 +12,11 @@ class User
     private $username;
     private $password;
     private $email;
-    private $verified;
+    private $verifiedAt;
     private $emailHash;
     private $passwordHash;
     private $createdAt;
+    private $receiveEmails;
 
     public function __construct(array $data)
     {
@@ -100,17 +101,17 @@ class User
     /**
      * @return mixed
      */
-    public function getVerified()
+    public function getVerifiedAt()
     {
-        return $this->verified;
+        return $this->verifiedAt;
     }
 
     /**
-     * @param mixed $verified
+     * @param mixed $verifiedAt
      */
-    public function setVerified($verified): void
+    public function setVerifiedAt($verifiedAt): void
     {
-        $this->verified = $verified;
+        $this->verifiedAt = $verifiedAt;
     }
 
     /**
@@ -151,5 +152,29 @@ class User
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReceiveEmails()
+    {
+        return $this->receiveEmails;
+    }
+
+    /**
+     * @param mixed $receiveEmails
+     */
+    public function setReceiveEmails($receiveEmails): void
+    {
+        $this->receiveEmails = $receiveEmails;
     }
 }

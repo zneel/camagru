@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 <html lang="fr">
 <?php require 'head.php' ?>
@@ -63,8 +65,8 @@ session_start();
                     </form>
                 </div>
                 <p class="has-text-grey">
-                    <a href="index.php">Connection</a> &nbsp;·&nbsp;
-                    <a href="index.php">Mot de passe oublié</a> &nbsp;·&nbsp;
+                    <a href="/login.php">Connexion</a> &nbsp;·&nbsp;
+                    <a href="/reset_password.php">Mot de passe oublié</a> &nbsp;·&nbsp;
                 </p>
             </div>
         </div>
@@ -73,3 +75,4 @@ session_start();
 <?php require 'footer.php' ?>
 </body>
 </html>
+<?php $_SESSION['flash']['reg_err'] = [] ?>

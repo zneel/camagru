@@ -19,12 +19,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
         $manager = new UserManager($db);
         $user = new User($_POST);
-        $user->setEmailHash(bin2hex(random_bytes(20)));
         $auth = new Auth($db);
-        $auth->sendConfirmationEmail($user);
-        $manager->save($user);
-        $_SESSION['flash']['email'] = 'Un email de confirmation vous a ete envoye';
-        header('Location: /login.php');
+        $user->setEmailHash($auth->hashEmail());
+        $user->setPassword($auth->hashPassword($user->getPassword()));
+        try {
+            $manager->save($user);
+            $auth->sendConfirmationEmail($user);
+            $_SESSION['flash']['email'] = 'Un email de confirmation vous a ete envoye';
+            header('Location: /login.php');
+            exit();
+        } catch (PDOException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                $_SESSION['flash']['reg_err'] = [];
+                array_push($_SESSION['flash']['reg_err'], ['Email ou nom d\'uttilisateur déjà utilisé']);
+                header('Location: /register.php');
+                exit();
+            }
+        }
     } else {
         $_SESSION['form']['reg'] = $_POST;
         $_SESSION['flash']['reg_err'] = [];
