@@ -1,16 +1,39 @@
 <?php
 /**
  * Created by PhpStorm.
- * UserManager: ebouvier
- * Date: 2019-02-09
- * Time: 16:11
+ * User: ebouvier
+ * Date: 2019-02-23
+ * Time: 15:04
  */
 
-interface FormValidator
+abstract class FormValidator
 {
-    public function validate($form);
+    private $errors = [];
+    private $valid = true;
 
-    public function setErrors(array $error);
+    public function setErrors(array $error)
+    {
+        array_push($this->errors, $error);
+    }
 
-    public function getErrors();
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param bool $valid
+     */
+    public function setValid(bool $valid): void
+    {
+        $this->valid = $valid;
+    }
 }

@@ -101,7 +101,7 @@ class User
     /**
      * @return mixed
      */
-    public function getVerifiedAt()
+    public function getVerified_At()
     {
         return $this->verifiedAt;
     }
@@ -109,7 +109,7 @@ class User
     /**
      * @param mixed $verifiedAt
      */
-    public function setVerifiedAt($verifiedAt): void
+    public function setVerified_At($verifiedAt): void
     {
         $this->verifiedAt = $verifiedAt;
     }
@@ -117,7 +117,7 @@ class User
     /**
      * @return mixed
      */
-    public function getEmailHash()
+    public function getEmail_Hash()
     {
         return $this->emailHash;
     }
@@ -125,7 +125,7 @@ class User
     /**
      * @param mixed $emailHash
      */
-    public function setEmailHash($emailHash): void
+    public function setEmail_Hash($emailHash): void
     {
         $this->emailHash = $emailHash;
     }
@@ -133,7 +133,7 @@ class User
     /**
      * @return mixed
      */
-    public function getPasswordHash()
+    public function getPassword_Hash()
     {
         return $this->passwordHash;
     }
@@ -141,7 +141,7 @@ class User
     /**
      * @param mixed $passwordHash
      */
-    public function setPasswordHash($passwordHash): void
+    public function setPassword_Hash($passwordHash): void
     {
         $this->passwordHash = $passwordHash;
     }
@@ -149,7 +149,7 @@ class User
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreated_At()
     {
         return $this->createdAt;
     }
@@ -157,7 +157,7 @@ class User
     /**
      * @param mixed $createdAt
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreated_At($createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -165,7 +165,7 @@ class User
     /**
      * @return mixed
      */
-    public function getReceiveEmails()
+    public function getReceive_Emails()
     {
         return $this->receiveEmails;
     }
@@ -173,7 +173,7 @@ class User
     /**
      * @param mixed $receiveEmails
      */
-    public function setReceiveEmails($receiveEmails): void
+    public function setReceive_Emails($receiveEmails): void
     {
         $this->receiveEmails = $receiveEmails;
     }

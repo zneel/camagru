@@ -6,8 +6,11 @@
  * Time: 18:32
  */
 
-if (isset($_SESSION['user'])) {
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (isset($_SESSION) && !empty($_SESSION['user'])) {
     session_destroy();
-    header("Location: /login.php");
+    header("Location: /index.php");
     exit();
 }

@@ -22,21 +22,21 @@ class UserManager
         $query = $this->db->getConnection()->prepare('INSERT INTO `camagru`.users (username,
                              password, 
                              email,
-                             emailHash, 
-                             createdAt, 
-                             passwordHash) 
+                             email_hash, 
+                             created_at, 
+                             password_hash) 
                              VALUES (:username, 
                                      :password, 
                                      :email,
-                                     :emailHash, 
-                                     :createdAt, 
-                                     :passwordHash)');
+                                     :email_hash, 
+                                     :created_at, 
+                                     :password_hash)');
         $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
         $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
         $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $query->bindValue(':emailHash', $user->getEmailHash(), PDO::PARAM_STR);
-        $query->bindValue(':createdAt', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':passwordHash', $user->getPasswordHash(), PDO::PARAM_STR);
+        $query->bindValue(':email_hash', $user->getEmailHash(), PDO::PARAM_STR);
+        $query->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+        $query->bindValue(':password_hash', $user->getPasswordHash(), PDO::PARAM_STR);
         $query->execute();
     }
 
@@ -58,13 +58,13 @@ class UserManager
     public function activateUser(string $username, string $emailHash)
     {
         $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET 
-                         camagru.users.emailHash = NULL, 
-                         camagru.users.verifiedAt = :verifiedAt 
+                         camagru.users.email_hash = NULL, 
+                         camagru.users.verified_at = :verified_at 
                         WHERE camagru.users.username = :username
-                        AND camagru.users.emailHash= :emailHash');
-        $query->bindValue(':verifiedAt', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+                        AND camagru.users.email_hash= :email_hash');
+        $query->bindValue(':verified_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
         $query->bindValue(':username', $username, PDO::PARAM_STR);
-        $query->bindValue(':emailHash', $emailHash, PDO::PARAM_STR);
+        $query->bindValue(':email_hash', $emailHash, PDO::PARAM_STR);
         $query->execute();
     }
 

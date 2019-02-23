@@ -5,14 +5,16 @@
  * Date: 2019-02-12
  * Time: 20:08
  */
-session_start();
+require_once '../config/setup.php';
+require_once ROOT . '/models/UserManager.php';
+require_once ROOT . '/services/RegisterForm.php';
+require_once ROOT . '/models/Db.php';
+require_once ROOT . '/config/database.php';
+require_once ROOT . '/services/Auth.php';
+if (!isset($_SESSION)) {
+    session_start();
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
-    require_once '../config/setup.php';
-    require_once ROOT . '/models/UserManager.php';
-    require_once ROOT . '/services/RegisterForm.php';
-    require_once ROOT . '/models/Db.php';
-    require_once ROOT . '/config/database.php';
-    require_once ROOT . '/services/Auth.php';
     $registerForm = new RegisterForm();
     $valid = $registerForm->validate($_POST);
     if ($valid) {
@@ -20,12 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $manager = new UserManager($db);
         $user = new User($_POST);
         $auth = new Auth($db);
-        $user->setEmailHash($auth->hashEmail());
+        $user->setEmail_Hash($auth->hashEmail());
         $user->setPassword($auth->hashPassword($user->getPassword()));
         try {
             $manager->save($user);
             $auth->sendConfirmationEmail($user);
             $_SESSION['flash']['email'] = 'Un email de confirmation vous a ete envoye';
+
             header('Location: /login.php');
             exit();
         } catch (PDOException $e) {

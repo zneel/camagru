@@ -14,7 +14,7 @@ if (!isset($_SESSION)) {
                 <h3 class="title has-text-grey">Mot de passe oublié ?</h3>
                 <p class="subtitle has-text-grey">What a shame...</p>
                 <div class="box">
-                    <form action="actions/register_form.php" method="post">
+                    <form action="actions/reset_password_action.php" method="post">
                         <div class="field">
                             <div class="control">
                                 <input name="email" class="input " type="email" placeholder="Votre email" required

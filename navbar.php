@@ -40,14 +40,14 @@ HTML;
             echo <<<HTML
 <div class="navbar-end">
             <div class="navbar-item">
+            <p style="margin-right: 20px">
+                    <a href="/profile/{$_SESSION['user']['username']}">{$_SESSION['user']['username']}</a>
+                </p>
                 <div class="buttons">
                     <a class="button is-warning" href="/logout.php">
                         Deconnexion
                     </a>
                 </div>
-                <p>
-                <a href="/profile/" {$_SESSION['user']['username']} ></a>
-</p>
             </div>
         </div>
 HTML;

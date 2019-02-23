@@ -10,7 +10,6 @@ require_once ROOT . '/models/UserManager.php';
 require_once ROOT . '/models/Db.php';
 require_once ROOT . '/config/database.php';
 require_once ROOT . '/services/Auth.php';
-
 session_start();
 if (isset($_SESSION['user'])) {
     header('Location: /index.php');
@@ -22,15 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $manager = new UserManager($db);
         $user = $manager->getUserByUsername($_POST['username']);
         if (!empty($user)) {
-            $auth = new Auth($db);
-            if (empty($user->getVerifiedAt())) {
-                var_dump($user->getVerifiedAt());
-                die();
+            if (empty($user->getVerified_At())) {
                 $_SESSION['flash']['log_err'] = [];
                 $_SESSION['flash']['log_err'] = 'Votre compte n\'est pas confirme.';
                 header("Location: /login.php");
                 exit();
             }
+            $auth = new Auth($db);
             $authenticated = $auth->authenticate($user, $_POST['password']);
             if ($authenticated) {
                 $user->setPassword('');
