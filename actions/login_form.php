@@ -10,8 +10,10 @@ require_once ROOT . '/models/UserManager.php';
 require_once ROOT . '/models/Db.php';
 require_once ROOT . '/config/database.php';
 require_once ROOT . '/services/Auth.php';
-session_start();
-if (isset($_SESSION['user'])) {
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!empty($_SESSION['user'])) {
     header('Location: /index.php');
     exit();
 }
@@ -31,7 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $authenticated = $auth->authenticate($user, $_POST['password']);
             if ($authenticated) {
                 $user->setPassword('');
-                $_SESSION['user']['username'] = $user->getUsername();
+                $_SESSION['user'] = array('username' => $user->getUsername(),
+                    'email' => $user->getEmail(),
+                    'id' => (int)$user->getId(),
+                    'receive_mails' => (int)$user->getReceive_Emails());
             } else {
                 $_SESSION['flash']['log_err'] = 'Mauvais nom d\'uttilisateur ou mot de passe.';
                 header('Location: /login.php');

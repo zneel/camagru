@@ -2,6 +2,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+var_dump($_SESSION);
 ?>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -41,7 +42,8 @@ HTML;
 <div class="navbar-end">
             <div class="navbar-item">
             <p style="margin-right: 20px">
-                    <a href="/profile/{$_SESSION['user']['username']}">{$_SESSION['user']['username']}</a>
+                    <a href="/profile.php">
+{$_SESSION['user']['username']}</a>
                 </p>
                 <div class="buttons">
                     <a class="button is-warning" href="/logout.php">
