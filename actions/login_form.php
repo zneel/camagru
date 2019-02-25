@@ -13,10 +13,6 @@ require_once ROOT . '/services/Auth.php';
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!empty($_SESSION['user'])) {
-    header('Location: /index.php');
-    exit();
-}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
@@ -36,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
                 $_SESSION['user'] = array('username' => $user->getUsername(),
                     'email' => $user->getEmail(),
                     'id' => (int)$user->getId(),
-                    'receive_mails' => (int)$user->getReceive_Emails());
+                    'receive_emails' => (int)$user->getReceive_Emails());
             } else {
                 $_SESSION['flash']['log_err'] = 'Mauvais nom d\'uttilisateur ou mot de passe.';
                 header('Location: /login.php');

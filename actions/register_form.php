@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             }
         }
     } else {
+        foreach ($_POST as $k => $v) {
+            $_POST[$k] = htmlspecialchars($v);
+        }
         $_SESSION['form']['reg'] = $_POST;
         $_SESSION['flash']['reg_err'] = [];
         $_SESSION['flash']['reg_err'] = $registerForm->getErrors();

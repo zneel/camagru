@@ -19,14 +19,14 @@ class UserManager
 
     public function save(User $user)
     {
-        $query = $this->db->getConnection()->prepare('INSERT INTO `camagru`.users (username,
+        $query = $this->db->getConnection()->prepare('INSERT INTO camagru.users (username,
                              password, 
                              email,
                              email_hash, 
                              created_at, 
                              password_hash) 
                              VALUES (:username, 
-                                     :password, 
+                                     :password,
                                      :email,
                                      :email_hash, 
                                      :created_at, 
@@ -34,17 +34,20 @@ class UserManager
         $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
         $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
         $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $query->bindValue(':email_hash', $user->getEmailHash(), PDO::PARAM_STR);
+        $query->bindValue(':email_hash', $user->getEmail_Hash(), PDO::PARAM_STR);
         $query->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':password_hash', $user->getPasswordHash(), PDO::PARAM_STR);
+        $query->bindValue(':password_hash', $user->getPassword_Hash(), PDO::PARAM_STR);
         $query->execute();
     }
 
-    public function get($id)
+    public function get(int $id): ?User
     {
         $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE id=:id');
-        $query->bindParam(':id', $id);
+        $query->execute(['id' => $id]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (!$user) {
+            return null;
+        }
         return new User($user);
     }
 
@@ -82,5 +85,29 @@ class UserManager
             return [];
         }
         return new User($user);
+    }
+
+    public function updateProfile(int $id, array $values, bool $updatePwd)
+    {
+        $user = $this->get($id);
+        $user->setUsername($values['username']);
+        if ($updatePwd) {
+            $user->setPassword($values['password']);
+        }
+        $user->setEmail($values['email']);
+        $user->setReceive_Emails($values['receive_emails'] == 'on' ? 1 : 0);
+        $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET
+                         camagru.users.username = :username,
+                         camagru.users.email = :email,
+                         camagru.users.password = :password,
+                         camagru.users.receive_emails = :receive_emails
+                        WHERE camagru.users.id = :id');
+        $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
+        $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+        $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
+        $query->bindValue(':receive_emails', $user->getReceive_Emails(), PDO::PARAM_STR);
+        $query->bindValue(':id', $user->getId(), PDO::PARAM_STR);
+        $query->execute();
+        return $this->get($id);
     }
 }

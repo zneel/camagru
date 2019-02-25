@@ -32,7 +32,9 @@ if (!empty($_SESSION['user'])) {
                                        placeholder="Votre mot de passe">
                             </div>
                         </div>
-                        <button class="button is-block is-info  is-fullwidth">Connexion</button>
+                        <button type="submit" class="button is-block is-info
+                        is-fullwidth">Connexion
+                        </button>
                         <?php if (!empty($_SESSION['flash']['log_err'])) {
                             echo '<p class="has-text-danger has-text-left-desktop">' . $_SESSION['flash']['log_err'] . '</p>';
                         } ?>

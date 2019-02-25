@@ -6,10 +6,13 @@
  * Time: 17:42
  */
 require_once 'ValidationErrors.php';
+require_once 'FormValidator.php';
+require_once 'FormValidatorInterface.php';
+
 
 class LoginFormInterface extends FormValidator implements FormValidatorInterface
 {
-    public function validate($form)
+    public function validate(array $form)
     {
         if (!preg_match('/^[a-zA-Z0-9]{2,13}$/', $form['username'])) {
             $this->setValid(false);

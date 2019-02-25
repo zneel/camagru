@@ -7,6 +7,8 @@
  */
 
 require_once 'ValidationErrors.php';
+require_once 'FormValidator.php';
+require_once 'FormValidatorInterface.php';
 
 class RegisterForm extends FormValidator implements FormValidatorInterface
 {

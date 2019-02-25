@@ -8,7 +8,7 @@
 
 interface FormValidatorInterface
 {
-    public function validate($form);
+    public function validate(array $form);
 
     public function setErrors(array $error);
 

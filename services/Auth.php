@@ -50,8 +50,8 @@ class Auth
 Pour activer votre compte, veuillez cliquer sur le lien ci dessous
 ou copier/coller dans votre navigateur internet.
  
-http://' . $_SERVER['HTTP_HOST'] . '/activation.php?login=' . urlencode($user->getUsername()) . '&key=' . urlencode($user->getEmailHash
-            ()) . '
+http://' . $_SERVER['HTTP_HOST'] . '/activation.php?login=' . urlencode($user->getUsername()) . '&key=' . urlencode
+            ($user->getEmail_Hash()) . '
  
  
 ---------------

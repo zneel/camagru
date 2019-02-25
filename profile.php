@@ -9,6 +9,11 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (empty($_SESSION['user'])) {
+    header('Location: /index.php');
+    exit();
+}
+$checkbox = $_SESSION['user']['receive_emails'] ? "<input  type=\"checkbox\" name=\"receive_emails\" checked>" : "<input  type=\"checkbox\" name=\"receive_emails\">"
 ?>
 <html lang="fr">
 <?php require 'head.php' ?>
@@ -45,7 +50,8 @@ if (!isset($_SESSION)) {
                 </div>
                 <div class="field">
                   <label class="checkbox">
-                    <input name="receive_mails" type="checkbox" checked="{$_SESSION['user']['receive_mails']}">
+                    <input type="hidden" name="receive_emails" value="{$_SESSION['user']['receive_emails']}">
+                    {$checkbox}
                             Recevoir notifications
                 </label>
                 </div>
@@ -53,9 +59,7 @@ if (!isset($_SESSION)) {
                         <strong>Valider</strong>
                     </button>
 </form>
-                
 HTML;
-
                 } else {
                     header('Location: /login.php');
                     exit();
