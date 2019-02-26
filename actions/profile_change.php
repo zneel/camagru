@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $form = new ProfileForm();
         $valid = $form->validate($_POST);
         if ($valid) {
-            $auth = new Auth($db);
+            $auth = new Auth();
             $_POST['password'] = !empty($_POST['password']) ? $auth->hashPassword($_POST['password']) : '';
             $user = $manager->updateProfile($_SESSION['user']['id'], $_POST, !empty($_POST['password']));
             $_SESSION['user']['username'] = $user->getUsername();

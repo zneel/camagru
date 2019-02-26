@@ -16,7 +16,7 @@ class RegisterForm extends FormValidator implements FormValidatorInterface
      * @param $form
      * @return bool
      */
-    public function validate($form)
+    public function validate(array $form)
     {
 
         if (strcmp($form['password'], $form['cpassword']) != 0) {
@@ -31,7 +31,7 @@ class RegisterForm extends FormValidator implements FormValidatorInterface
             $this->setValid(false);
             $this->setErrors(['username' => ValidationErrors::INVALID_USERNAME]);
         }
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,12}$/', $form['password'])) {
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,16}$/', $form['password'])) {
             $this->setValid(false);
             $this->setErrors(['password' => ValidationErrors::INVALID_PASSWORD]);
         }

@@ -8,24 +8,9 @@
 
 class Auth
 {
-    private $db;
-
-    public function __construct(Db $db)
-    {
-        $this->db = $db;
-    }
-
     public function authenticate(User $user, string $password)
     {
         return password_verify($password, $user->getPassword());
-    }
-
-    /**
-     * @param UserManager $user
-     */
-    public function resetPassword(User $user)
-    {
-        // TODO: Implement resetPassword() method.
     }
 
     public function hashPassword(string $password)
@@ -33,14 +18,13 @@ class Auth
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    public function hashEmail(): string
+    public function generateHash(): string
     {
-        return bin2hex(random_bytes(20));
+        return bin2hex(random_bytes(32));
     }
 
     public function sendConfirmationEmail(User $user)
     {
-        // Préparation du mail contenant le lien d'activation
         $destinataire = $user->getEmail();
         $sujet = "Activer votre compte";
         $entete = "From: noreply@camagru.fr";
@@ -58,6 +42,29 @@ http://' . $_SERVER['HTTP_HOST'] . '/activation.php?login=' . urlencode($user->g
 Ceci est un mail automatique, Merci de ne pas y répondre.';
 
 
-        mail($destinataire, $sujet, $message, $entete); // Envoi du mail
+        mail($destinataire, $sujet, $message, $entete);
+    }
+
+    public function sendResetPasswordEmail(User $user)
+    {
+        $destinataire = $user->getEmail();
+        $sujet = "Reinitialiser votre mot de passe";
+        $entete = "From: noreply@camagru.fr";
+
+        $message = 'Bienvenue sur Camagru,
+ 
+Pour reinitialiser votre mot de passe, veuillez cliquer sur le lien ci dessous
+ou copier/coller dans votre navigateur internet.
+ 
+http://' . $_SERVER['HTTP_HOST'] . '/reset_password.php?login=' . urlencode($user->getUsername()) . '&key=' .
+            urlencode
+            ($user->getPassword_Hash()) . '
+ 
+ 
+---------------
+Ceci est un mail automatique, Merci de ne pas y répondre.';
+
+
+        mail($destinataire, $sujet, $message, $entete);
     }
 }

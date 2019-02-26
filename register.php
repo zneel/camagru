@@ -70,7 +70,7 @@ if (!empty($_SESSION['user'])) {
                 </div>
                 <p class="has-text-grey">
                     <a href="/login.php">Connexion</a> &nbsp;·&nbsp;
-                    <a href="/reset_password.php">Mot de passe oublié</a> &nbsp;·&nbsp;
+                    <a href="/forgot_password.php">Mot de passe oublié</a> &nbsp;·&nbsp;
                 </p>
             </div>
         </div>
@@ -79,4 +79,4 @@ if (!empty($_SESSION['user'])) {
 <?php require 'footer.php' ?>
 </body>
 </html>
-<?php $_SESSION['flash']['reg_err'] = [] ?>
+<?php $_SESSION['flash'] = [] ?>

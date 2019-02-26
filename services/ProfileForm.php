@@ -34,7 +34,7 @@ class ProfileForm extends FormValidator implements FormValidatorInterface
 
     private function validatePassword(string $password)
     {
-        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,12}$/', $password) ||
+        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,16}$/', $password) ||
             empty($password)) {
             return true;
         }

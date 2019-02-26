@@ -18,7 +18,7 @@ class LoginFormInterface extends FormValidator implements FormValidatorInterface
             $this->setValid(false);
             $this->setErrors(['username' => ValidationErrors::INVALID_USERNAME]);
         }
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,12}$/', $form['password'])) {
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,16}$/', $form['password'])) {
             $this->setValid(false);
             $this->setErrors(['password' => ValidationErrors::INVALID_PASSWORD]);
         }

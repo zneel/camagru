@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
                 header("Location: /login.php");
                 exit();
             }
-            $auth = new Auth($db);
+            $auth = new Auth();
             $authenticated = $auth->authenticate($user, $_POST['password']);
             if ($authenticated) {
                 $user->setPassword('');

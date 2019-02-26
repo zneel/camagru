@@ -82,7 +82,7 @@ class UserManager
         $query->execute(['username' => $username]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
         if (empty($user)) {
-            return [];
+            return null;
         }
         return new User($user);
     }
@@ -109,5 +109,50 @@ class UserManager
         $query->bindValue(':id', $user->getId(), PDO::PARAM_STR);
         $query->execute();
         return $this->get($id);
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE email=:email');
+        $query->execute(['email' => $email]);
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (empty($user)) {
+            return null;
+        }
+        return new User($user);
+    }
+
+    public function generatePasswordHash(int $id, string $hash)
+    {
+        $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET 
+                         camagru.users.password_hash = :hash
+                        WHERE camagru.users.id = :id');
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query->bindValue(':hash', $hash, PDO::PARAM_STR);
+        $query->execute();
+    }
+
+    public function getUserByUsernameAndPasswordHash(string $username, string $hash)
+    {
+        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users 
+                    WHERE username=:username
+                    AND password_hash=:password_hash');
+        $query->execute(['username' => $username, 'password_hash' => $hash]);
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (empty($user)) {
+            return null;
+        }
+        return new User($user);
+    }
+
+    public function changePassword(User $user)
+    {
+        $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET 
+                         camagru.users.password_hash = NULL,
+                         camagru.users.password = :password
+                        WHERE camagru.users.id = :id');
+        $query->bindValue(':id', $user->getId(), PDO::PARAM_INT);
+        $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
+        $query->execute();
     }
 }

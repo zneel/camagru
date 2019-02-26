@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
         $manager = new UserManager($db);
         $user = new User($_POST);
-        $auth = new Auth($db);
-        $user->setEmail_Hash($auth->hashEmail());
+        $auth = new Auth();
+        $user->setEmail_Hash($auth->generateHash());
         $user->setPassword($auth->hashPassword($user->getPassword()));
         try {
             $manager->save($user);
