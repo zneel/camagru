@@ -22,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
             $userManager = new UserManager($db);
             $auth = new Auth();
-            $user = $userManager->getUserByUsernameAndPasswordHash($_POST['username'], $_POST['key']);
-            var_dump($_POST);
+            $user = $userManager->getUserByUsernameAndPasswordHash(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['key']));
             $user->setPassword($auth->hashPassword($_POST['password']));
             $userManager->changePassword($user);
             header('Location: /login.php');
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         } else {
             $_SESSION['flash'] = [];
             $_SESSION['flash']['err'] = $form->getErrors();
-            header('Location: /reset_password.php?login=' . $_POST['username'] . '&key=' . $_POST['key']);
+            header(htmlspecialchars('Location: /reset_password.php?login=' . $_POST['username'] . '&key=' . $_POST['key']));
             exit();
         }
     }

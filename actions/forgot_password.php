@@ -29,7 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             header('Location: /forgot_password.php');
             exit();
         } else {
-            $manager->generatePasswordHash($user->getId(), $auth->generateHash());
+            $hash = $auth->generateHash();
+            $manager->generatePasswordHash($user->getId(), $hash);
+            $user->setPassword_Hash($hash);
             $auth->sendResetPasswordEmail($user);
             $_SESSION['flash']['message'] = 'Un email vous a été envoyé';
             header('Location: /forgot_password.php');
