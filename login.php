@@ -17,7 +17,7 @@ if (!empty($_SESSION['user'])) {
             <div class="column is-4 is-offset-4">
                 <?php echo !empty($_SESSION['flash']['email']) ? "<p id='mail-notif' class='notification is-primary'><button id='delete-button' class='delete'></button>
 " . $_SESSION['flash']['email'] . "</p>" : null ?>
-                <h3 class="title has-text-grey">Connexion</h3>
+                <h3 class="title">Connexion</h3>
                 <div class="box">
                     <form action="actions/login_form.php" method="post">
                         <div class="field">

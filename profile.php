@@ -50,7 +50,7 @@ $checkbox = $_SESSION['user']['receive_emails'] ? "<input  type=\"checkbox\" nam
                 </div>
                 <div class="field">
                   <label class="checkbox">
-                    <input type="hidden" name="receive_emails" value="{$_SESSION['user']['receive_emails']}">
+                    <input type="hidden" name="receive_emails" class="checkbox" value="{$_SESSION['user']['receive_emails']}">
                     {$checkbox}
                             Recevoir notifications
                 </label>

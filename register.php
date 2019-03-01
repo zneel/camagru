@@ -15,8 +15,8 @@ if (!empty($_SESSION['user'])) {
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
-                <h3 class="title has-text-grey">Inscription</h3>
-                <p class="subtitle has-text-grey">Inscrivez vous des maintenant!</p>
+                <h3 class="title">Inscription</h3>
+                <p class="subtitle">Inscrivez vous des maintenant!</p>
                 <div class="box">
                     <form action="actions/register_form.php" method="post">
                         <div class="field">
