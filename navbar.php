@@ -4,67 +4,50 @@ if (!isset($_SESSION)) {
 }
 var_dump($_SESSION);
 ?>
-<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="#">
-                <img alt="norminet" src="https://pbs.twimg.com/media/Db8uqDaX4AE6vA3.jpg">
-            </a>
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-               data-target="">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <div id="" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/">
-                    <strong>Camagru</strong>
-                </a>
-            </div>
-            <?php if (empty($_SESSION['user'])) {
-                echo <<<HTML
+<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="http://pluspng.com/img-png/letter-c-png-1600.png" alt="">
+        </a>
+        <a class="navbar-item" href="/">
+            Camagru
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="" class="navbar-menu">
+        <a class="navbar-item is-tab" href="/editor.php">
+            <i style="padding-right: 3px;" class="fas fa-camera-retro"></i>
+            Editeur
+        </a>
+        <hr>
+        <?php if (empty($_SESSION['user'])) {
+            echo <<<HTML
 <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-info" href="register.php">
-                        <strong>Inscription</strong>
+                    <a class="navbar-item is-tab" href="register.php">
+                        Inscription
                     </a>
-                    <a class="button is-primary" href="login.php">
-                        <strong>Connexion</strong>
+                    <a class="navbar-item is-tab" href="login.php">
+                        Connexion
                     </a>
-                </div>
-            </div>
         </div>
 HTML;
-            } else {
-                echo <<<HTML
+        } else {
+            echo <<<HTML
 <div class="navbar-end">
-            <div class="navbar-item">
-            <p style="margin-right: 20px">
-                    <a href="/profile.php">
+                    <a class="navbar-item is-tab" href="/profile.php">
+                    <i style="padding-right: 3px" class="fas fa-user-astronaut"></i>
 {$_SESSION['user']['username']}</a>
-                </p>
-                <div class="buttons">
-                    <a class="button is-danger" href="/logout.php">
+                    <a class="navbar-item is-tab" href="/logout.php">
+                    <i style="padding-right: 3px" class="fas fa-sign-out-alt"></i>
                         Deconnexion
                     </a>
-                </div>
-            </div>
         </div>
 HTML;
-            } ?>
-        </div>
+        } ?>
     </div>
 </nav>
-<script>
-    (function () {
-        const burger = document.querySelector('.navbar-burger');
-        const menu = document.querySelector('.navbar-menu');
-        burger.addEventListener('click', function () {
-            burger.classList.toggle('is-active');
-            menu.classList.toggle('is-active');
-        });
-    })();
-</script>

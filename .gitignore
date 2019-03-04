@@ -1,2 +1,7 @@
 /vendor/
 .idea
+/uploads/*.jpg
+/uploads/*.png
+/uploads/*.jpeg
+.DS_Store
+uploads/.DS_Store

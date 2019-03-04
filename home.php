@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 ?>
-<html lang="fr">
+<html class="has-navbar-fixed-top" lang="fr">
 <?php require 'head.php' ?>
 <body>
 <?php require 'navbar.php' ?>
