@@ -15,9 +15,10 @@ class Image
     private $createdAt;
     private $user;
 
-    public function __construct(array $data)
+    public function __construct(array $data = null)
     {
-        $this->hydrate($data);
+        if (!empty($data))
+            $this->hydrate($data);
     }
 
     public function hydrate(array $data)
@@ -89,7 +90,7 @@ class Image
     /**
      * @param mixed $user
      */
-    public function setUser(User $user): void
+    public function setUser($user): void
     {
         $this->user = $user;
     }

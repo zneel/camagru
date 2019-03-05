@@ -6,6 +6,13 @@
  * Time: 15:06
  */
 
+require_once '../config/setup.php';
+require_once ROOT . '/models/ImageManager.php';
+require_once ROOT . '/services/ImageService.php';
+require_once ROOT . '/models/Image.php';
+require_once ROOT . '/models/Db.php';
+require_once ROOT . '/config/database.php';
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -15,13 +22,13 @@ if (empty($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
-    var_dump($_FILES);
     if ((!empty($_POST['webcamImage']) || !empty($_POST['fileUpload'])) && !empty($_POST['imageChoice'])) {
+        $imageFile = null;
         if (!empty($_POST['webcamImage'])) {
-            $outputFile = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
+            $imageFile = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
             $explode = explode(';base64', $_POST['webcamImage']);
             $decoded64 = base64_decode($explode[1]);
-            file_put_contents($outputFile, $decoded64);
+            file_put_contents($imageFile, $decoded64);
         } else if (!empty($_POST['fileUpload'])) {
             $mimeTypes = ['png' => 'image/png',
                 'jpe' => 'image/jpeg',
@@ -34,6 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         } else {
             header('Location: /editor.php');
         }
+        $image = new Image();
+        $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
+        $imageManager = new ImageManager($db);
+        $user = new User($_SESSION['user']);
+        $image->setPath($imageFile);
+        $image->setUser($_SESSION['user']['id']);
+        $imageManager->save($image);
+        $imageService = new ImageService($image->getPath(), $_POST['imageChoice']);
+        $imageService->merge();
+        header('Content-type: image/png');
+        imagepng($imageService->getImage());
+        imagedestroy($imageService->getImage());
+        die();
     }
     die();
 }

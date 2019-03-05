@@ -18,7 +18,7 @@ function getImages()
     $dir = array_diff(scandir('./assets/filters'), array('..', '.'));
     foreach ($dir as $k) {
         echo <<< HTML
-            <img onclick="turfu(this);" src="assets/filters/{$k}"</img>        
+            <img onclick="turfu(this);" src="assets/filters/{$k}" alt="{$k}"</img>        
 HTML;
 
     }
@@ -30,14 +30,6 @@ HTML;
 <body>
 <?php require 'navbar.php' ?>
 <section class="container">
-    <style>
-        video, canvas {
-            max-width: 400px;
-            height: auto;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
     <div style="margin: 25px 0" class="is-centered tabs is-toggle is-toggle-rounded">
         <ul>
             <li id="webCamClick" onclick="showWebcam()" class="is-active">
@@ -59,15 +51,11 @@ HTML;
             <div id="content">
                 <div id="webCamSide" class="column">
                     <h3 class="has-text-weight-bold">Webcam:</h3>
-                    <div style="position: relative;">
-                        <video style="position: absolute" onclick="snapshot(this);"
-                               id="video" autoplay></video>
-                        <canvas style="position: relative" id="videoCanvas"></canvas>
+                    <div>
+                        <video id="video" autoplay></video>
                     </div>
-                    <br>
-                    <br><br><br><br><br><br><br><br><br><br><br><br>
-                    <div class="is-4by3">
-                        <canvas id="canvas"></canvas>
+                    <div class="image">
+                        <canvas class="is-16by9" id="canvas"></canvas>
                     </div>
                     <hr>
                     <button id="captureButton" class="button is-warning" onclick="snapshot();" disabled>Prendre une
@@ -97,7 +85,8 @@ HTML;
                 </form>
             </div>
             <div style="margin: 10px 0;overflow: auto;">
-                <figure class="image is-64x64" style="display: flex; flex-direction: row;margin: 10px 0;">
+                <figure id="imageList" class="image is-64x64"
+                        style="display: flex; flex-direction: row;margin: 10px 0;">
                     <?php getImages() ?>
                 </figure>
             </div>
