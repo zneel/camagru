@@ -43,8 +43,10 @@ const snapshot = () => {
                     webcamImage.value = reader.result;
                 };
                 img.onload = () => {
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(choiceImage, 0, 0, canvas.width, canvas.height);
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    ctx.drawImage(img, 0, 0, 800, 600);
+                    ctx.drawImage(choiceImage, 0, 0, 800, 600);
                 };
                 submitWebcam.disabled = false;
                 img.src = URL.createObjectURL(blob);
@@ -65,10 +67,15 @@ const showWebcam = () => {
 };
 
 const showUpload = () => {
+    const webcamImage = document.getElementById('webcamImage');
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext('2d');
     const fileUploadSide = document.getElementById('fileUploadSide');
     const webCamSide = document.getElementById('webCamSide');
     const uploadClick = document.getElementById('uploadClick');
     const webCamClick = document.getElementById('webCamClick');
+    webcamImage.value = "";
+    ctx.clearRect(0, 0, 800, 600);
     webCamSide.classList.add("is-hidden");
     uploadClick.classList.add('is-active');
     webCamClick.classList.remove('is-active');

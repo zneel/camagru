@@ -15,7 +15,7 @@ if (empty($_SESSION['user'])) {
 
 function getImages()
 {
-    $dir = array_diff(scandir('./assets/filters'), array('..', '.'));
+    $dir = array_diff(scandir('./assets/filters'), array('..', '.', '.DS_Store'));
     foreach ($dir as $k) {
         echo <<< HTML
             <img onclick="turfu(this);" src="assets/filters/{$k}" alt="{$k}"</img>        
@@ -27,10 +27,22 @@ HTML;
 ?>
 <html lang="fr">
 <?php require 'head.php' ?>
+<style>
+    #canvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 <body>
 <?php require 'navbar.php' ?>
-<section class="container">
-    <div style="margin: 25px 0" class="is-centered tabs is-toggle is-toggle-rounded">
+<section class="section">
+    <div style="margin: 35px 0" class="is-centered tabs is-toggle is-toggle-rounded">
         <ul>
             <li id="webCamClick" onclick="showWebcam()" class="is-active">
                 <a>
@@ -47,16 +59,16 @@ HTML;
         </ul>
     </div>
     <div class="columns">
-        <div style="" class="column box is-three-quarters is-full-mobile">
+        <div style="" class="column box is-full-mobile">
             <div id="content">
-                <div id="webCamSide" class="column">
+                <div id="webCamSide">
                     <h3 class="has-text-weight-bold">Webcam:</h3>
-                    <div>
+                    <figure class="img-responsive">
                         <video id="video" autoplay></video>
-                    </div>
-                    <div class="image">
-                        <canvas class="is-16by9" id="canvas"></canvas>
-                    </div>
+                    </figure>
+                    <figure class="img-responsive">
+                        <canvas id="canvas"></canvas>
+                    </figure>
                     <hr>
                     <button id="captureButton" class="button is-warning" onclick="snapshot();" disabled>Prendre une
                         photo
@@ -91,11 +103,12 @@ HTML;
                 </figure>
             </div>
         </div>
-        <div class="column is-one-quarter box">
+        <div style="margin-bottom: 20px" class="column box">
             <h3 class="has-text-weight-bold">Mes photos:</h3>
         </div>
     </div>
 </section>
+<script type="text/javascript" src="assets/js/webcam.js"></script>
 <?php require 'footer.php' ?>
 </body>
 </html>

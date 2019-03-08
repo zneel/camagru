@@ -8,7 +8,6 @@
 
 require_once '../config/setup.php';
 require_once ROOT . '/models/ImageManager.php';
-require_once ROOT . '/services/ImageService.php';
 require_once ROOT . '/models/Image.php';
 require_once ROOT . '/models/Db.php';
 require_once ROOT . '/config/database.php';
@@ -45,15 +44,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
         $imageManager = new ImageManager($db);
         $user = new User($_SESSION['user']);
-        $image->setPath($imageFile);
+        $inputImage = imagecreatefromjpeg($imageFile);
+        list($w, $h) = getimagesize($imageFile);
+        if ($w > $h) {
+            $new_height = 600;
+            $new_width = floor($w * ($new_height / $h));
+            $crop_x = ceil(($w - $h) / 2);
+            $crop_y = 0;
+        } else {
+            $new_width = 800;
+            $new_height = floor($h * ($new_width / $w));
+            $crop_x = 0;
+            $crop_y = ceil(($h - $w) / 2);
+        }
+        $outputImage = imagecreatetruecolor(800, 600);
+        imagecopyresampled($outputImage, $inputImage, 0, 0, $crop_x, $crop_y, $new_width, $new_height, $w, $h);
+        $outImagePath = '/tmp/' . md5(time() . uniqid()) . ".jpg";
+        imagejpeg($outputImage, $outImagePath);
+        imagedestroy($outputImage);
+        $src = imagecreatefrompng($_POST['imageChoice']);
+        $dest = imagecreatefromjpeg($outImagePath);
+        imagecopy($dest, $src, 0, 0, 0, 0, 800, 600);
+        $outFinalPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
+        imagejpeg($dest, $outFinalPath);
+        imagedestroy($dest);
+        imagedestroy($src);
+        unlink($imageFile);
+        unlink($outImagePath);
+        $image->setPath($outFinalPath);
         $image->setUser($_SESSION['user']['id']);
         $imageManager->save($image);
-        $imageService = new ImageService($image->getPath(), $_POST['imageChoice']);
-        $imageService->merge();
-        header('Content-type: image/png');
-        imagepng($imageService->getImage());
-        imagedestroy($imageService->getImage());
-        die();
+        header('Location: /index.php');
+        exit();
     }
     die();
 }

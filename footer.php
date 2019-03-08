@@ -20,4 +20,3 @@ if (!isset($_SESSION)) {
         });
     })();
 </script>
-<script src="assets/js/webcam.js" type="text/javascript"></script>

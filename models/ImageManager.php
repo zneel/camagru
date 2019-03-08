@@ -20,10 +20,9 @@ class ImageManager
 
     public function save(Image $image)
     {
-        $query = $this->db->getConnection()->prepare('INSERT INTO camagru.images (path, created_at, user_id) 
-                            VALUES (:path, :created_at,:user_id)');
+        $query = $this->db->getConnection()->prepare('INSERT INTO camagru.images (path, user_id) 
+                            VALUES (:path, :user_id)');
         $query->bindValue(':path', $image->getPath(), PDO::PARAM_STR);
-        $query->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
         $query->bindValue(':user_id', $image->getUser(), PDO::PARAM_INT);
         $query->execute();
     }
@@ -44,5 +43,30 @@ class ImageManager
         $query = $this->db->getConnection()->prepare('DELETE FROM camagru.images WHERE id=:id');
         $query->bindParam(':id', $image->getId(), PDO::PARAM_INT);
         $query->execute();
+    }
+
+    public function get6(int $limit, int $current)
+    {
+        $offset = ($current - 1) * $limit;
+        $query = $this->db->getConnection()->prepare('SELECT
+                                            img.id, 
+                                            img.path, 
+                                            img.created_at, 
+                                            img.user_id, 
+                                            u.username FROM camagru.images img
+                                    JOIN users u ON u.id = img.user_id
+                                    ORDER BY img.created_at DESC
+                                    LIMIT :limit OFFSET :offset');
+        $query->bindParam('limit', $limit, PDO::PARAM_INT);
+        $query->bindParam('offset', $offset, PDO::PARAM_INT);
+        $query->execute();
+        return $query;
+    }
+
+    public function countImages()
+    {
+        $query = $this->db->getConnection()->prepare('SELECT COUNT(id) FROM camagru.images');
+        $query->execute();
+        return $query->fetchColumn();
     }
 }
