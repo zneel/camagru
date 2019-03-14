@@ -6,9 +6,9 @@
  * Time: 21:42
  */
 
-$DB_DSN = 'localhost:8889';
+$DB_DSN = 'mysql:3306';
 $DB_NAME = 'camagru';
-$DB_USER = 'root';
-$DB_PASSWORD = 'root';
+$DB_USER = 'camagru';
+$DB_PASSWORD = 'camagru';
 
 

@@ -49,12 +49,15 @@ class ImageManager
     {
         $offset = ($current - 1) * $limit;
         $query = $this->db->getConnection()->prepare('SELECT
-                                            img.id, 
-                                            img.path, 
-                                            img.created_at, 
-                                            img.user_id, 
-                                            u.username FROM camagru.images img
-                                    JOIN users u ON u.id = img.user_id
+                                    img.id,
+                                    img.path,
+                                    img.created_at,
+                                    img.user_id,
+                                    COUNT(ihl.image_id) AS likes,
+                                    u.username FROM camagru.images img
+                                    LEFT JOIN users u ON u.id = img.user_id
+                                    LEFT JOIN images_has_likes ihl ON img.id = ihl.image_id
+                                    GROUP BY img.id
                                     ORDER BY img.created_at DESC
                                     LIMIT :limit OFFSET :offset');
         $query->bindParam('limit', $limit, PDO::PARAM_INT);

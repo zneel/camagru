@@ -5,12 +5,11 @@
  * Date: 2019-02-24
  * Time: 14:50
  */
-require_once '../config/setup.php';
-require_once ROOT . '/models/UserManager.php';
-require_once ROOT . '/models/Db.php';
-require_once ROOT . '/config/database.php';
-require_once ROOT . '/services/ProfileForm.php';
-require_once ROOT . '/services/Auth.php';
+require_once '../config/database.php';
+require_once '../models/UserManager.php';
+require_once '../models/Db.php';
+require_once '../services/ProfileForm.php';
+require_once '../services/Auth.php';
 
 if (!isset($_SESSION)) {
     session_start();

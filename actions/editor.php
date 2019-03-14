@@ -6,11 +6,10 @@
  * Time: 15:06
  */
 
-require_once '../config/setup.php';
-require_once ROOT . '/models/ImageManager.php';
-require_once ROOT . '/models/Image.php';
-require_once ROOT . '/models/Db.php';
-require_once ROOT . '/config/database.php';
+require_once '../config/database.php';
+require_once '../models/ImageManager.php';
+require_once '../models/Image.php';
+require_once '../models/Db.php';
 
 if (!isset($_SESSION)) {
     session_start();

@@ -5,3 +5,4 @@
 /uploads/*.jpeg
 .DS_Store
 uploads/.DS_Store
+/db/*

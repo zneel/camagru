@@ -5,10 +5,9 @@
  * Date: 2019-02-27
  * Time: 09:29
  */
-require_once 'config/setup.php';
+require_once 'config/database.php';
 require_once 'models/ImageManager.php';
 require_once 'models/Db.php';
-require_once 'config/database.php';
 if (isset($_GET['page'])) {
     $offset = $_GET['page'];
 } else {
@@ -17,6 +16,7 @@ if (isset($_GET['page'])) {
 
 $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
 $limit = 6;
+
 function getPagination($db, $inc)
 {
     $imageManager = new ImageManager($db);
@@ -36,6 +36,7 @@ function getImages($db, $limit, $offset)
     $imageManager = new ImageManager($db);
     foreach ($imageManager->get6($limit, $offset) as $row) {
         $date = new DateTime($row['created_at']);
+        $user_id = !empty($_SESSION['user']) ? $_SESSION['user']['id'] : 0;
         $row['path'] = str_replace($_SERVER['DOCUMENT_ROOT'], "", $row['path']);
         echo <<<HTML
              <div class='column is-4'>
@@ -49,8 +50,7 @@ function getImages($db, $limit, $offset)
                         <div style="margin: 5px 0" class="level">
                             <p style="margin: 0" class="level-left">{$row['username']}</p>
                             <p class="has-text-right level-right">
-                                <a class="button is-default"><i class="fa fa-thumbs-up"></i> 5254</a>
-                                <a class="button is-default"><i class="fa fa-thumbs-down"></i> 1</a>
+                                <a href="actions/likehandler.php?image_id={$row['id']}&user_id={$user_id}" class="button is-default"><i style="padding-right: 3px" class="fa fa-thumbs-up"></i> {$row['likes']}</a>
                             </p>
                         </div>
                         <time datetime="2016-1-1">{$date->format('H:i:s l jS F Y')}</time>
