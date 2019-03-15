@@ -6,3 +6,4 @@
 .DS_Store
 uploads/.DS_Store
 /db/*
+/docker/php/configs/.msmtprc
