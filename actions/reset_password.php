@@ -14,6 +14,7 @@ require_once '../services/Auth.php';
 if (!isset($_SESSION)) {
     session_start();
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if (isset($_POST['username']) && isset($_POST['key'])) {
         $form = new ResetPasswordForm();

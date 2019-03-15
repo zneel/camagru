@@ -41,5 +41,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         }
     }
 }
-header('Location: /404.php');
-exit();

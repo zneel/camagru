@@ -71,14 +71,10 @@ class UserManager
         $query->execute();
     }
 
-    public function resetPassword()
-    {
-        // TODO
-    }
-
     public function getUserByUsername(string $username)
     {
-        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE camagru.users.username=:username');
+        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users 
+                                                                WHERE camagru.users.username=:username');
         $query->execute(['username' => $username]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
         if (empty($user)) {
@@ -87,6 +83,13 @@ class UserManager
         return new User($user);
     }
 
+    /**
+     * @param int $id
+     * @param array $values
+     * @param bool $updatePwd
+     * @return User|null
+     * @TODO: check if email and username is already used before updating and show error message.
+     */
     public function updateProfile(int $id, array $values, bool $updatePwd)
     {
         $user = $this->get($id);
