@@ -61,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         $outImagePath = '/tmp/' . md5(time() . uniqid()) . ".jpg";
         imagejpeg($outputImage, $outImagePath);
         imagedestroy($outputImage);
-        $src = imagecreatefrompng($_POST['imageChoice']);
+        $imageChoice = parse_url($_POST['imageChoice']);
+        $src = imagecreatefrompng($_SERVER['DOCUMENT_ROOT'] . $imageChoice['path']);
         $dest = imagecreatefromjpeg($outImagePath);
         imagecopy($dest, $src, 0, 0, 0, 0, 800, 600);
         $outFinalPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
