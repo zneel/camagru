@@ -19,6 +19,10 @@ if (empty($_SESSION['user'])) {
     exit();
 }
 
+/**
+ * @TODO: Handle file image upload handle errors.
+ * @TODO: Check forms?
+ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if ((!empty($_POST['webcamImage']) || !empty($_POST['fileUpload'])) && !empty($_POST['imageChoice'])) {
         $imageFile = null;
