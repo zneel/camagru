@@ -21,7 +21,11 @@ services:
       - mysql
     volumes:
       - .:/camagru
+    tty: true
     restart: unless-stopped
+    command:
+      - php /camagru/config/setup.php
+      - tail -f /dev/null
 
   mysql:
     image: mysql:5.7
