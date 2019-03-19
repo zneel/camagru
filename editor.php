@@ -74,7 +74,7 @@ HTML;
                         photo
                     </button>
                     <form action="actions/editor.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="imageChoice" id="imageChoice" hidden>
+                        <input type="hidden" name="imageChoice" class="imageChoice" hidden>
                         <input type="hidden" name="webcamImage" id="webcamImage" hidden>
                         <button id="submitWebcam" style="margin: 10px 0" class="button is-primary" disabled
                                 type="submit">Envoyer mon montage
@@ -83,10 +83,13 @@ HTML;
                 </div>
             </div>
             <div id="fileUploadSide" class="is-hidden">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="actions/editor.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="2000000"/>
                     <div class="file">
                         <label class="file-label">
-                            <input class="file-input" type="file" accept="image/*" name="fileUpload">
+                            <input id="fileInput" class="file-input" required type="file"
+                                   accept="image/x-png,image/jpg,image/jpeg"
+                                   name="fileUpload">
                             <span class="file-cta">
                                     <span class="file-label">
                                         Uploader une photo
@@ -94,6 +97,10 @@ HTML;
                                 </span>
                         </label>
                     </div>
+                    <input type="hidden" name="imageChoice" class="imageChoice" hidden>
+                    <button id="submitUpload" style="margin: 10px 0" class="button is-primary"
+                            type="submit">Envoyer mon montage
+                    </button>
                 </form>
             </div>
             <div style="margin: 10px 0;overflow: auto;">
