@@ -2,7 +2,6 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-var_dump($_SESSION);
 ?>
 <nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
     <div class="container">

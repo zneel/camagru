@@ -31,21 +31,21 @@ $checkbox = $_SESSION['user']['receive_emails'] ? "<input  type=\"checkbox\" nam
                 <div class="field">
                   <label class="label">Nom d'utilisateur</label>
                   <div class="control">
-                    <input name="username" class="input" type="text" placeholder="Nom d'uttilisateur" 
+                    <input name="username" class="input" autocomplete="username" type="text" placeholder="Nom d'uttilisateur" 
                     value="{$_SESSION['user']['username']}">
                   </div>
                 </div>
                 <div class="field">
                   <label class="label">Email</label>
                   <div class="control">
-                    <input name="email" class="input" type="email" placeholder="Email"
+                    <input name="email" class="input" type="email" autocomplete="email" placeholder="Email"
                     value="{$_SESSION['user']['email']}">
                   </div>
                 </div>
                 <div class="field">
                   <label class="label">Mot de passe</label>
                   <div class="control">
-                    <input name="password" class="input" type="password" placeholder="Mot de passe">
+                    <input name="password" class="input" autocomplete="current-password" type="password" placeholder="Mot de passe">
                   </div>
                 </div>
                 <div class="field">

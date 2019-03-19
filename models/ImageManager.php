@@ -27,15 +27,25 @@ class ImageManager
         $query->execute();
     }
 
-    public function get(int $id): ?Image
+    public function get(int $id): ?array
     {
-        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.images WHERE id=:id');
+        $query = $this->db->getConnection()->prepare('SELECT
+                                    img.id,
+                                    img.path,
+                                    img.created_at,
+                                    img.user_id,
+                                    COUNT(ihl.image_id) AS likes,
+                                    u.username FROM camagru.images img
+                                    LEFT JOIN users u ON u.id = img.user_id
+                                    LEFT JOIN images_has_likes ihl ON img.id = ihl.image_id
+                                    WHERE img.id = :id
+                                    GROUP BY img.id');
         $query->execute(['id' => $id]);
         $image = $query->fetch(PDO::FETCH_ASSOC);
         if (!$image) {
             return null;
         }
-        return new Image($image);
+        return $image;
     }
 
     public function delete(Image $image)
@@ -71,5 +81,19 @@ class ImageManager
         $query = $this->db->getConnection()->prepare('SELECT COUNT(id) FROM camagru.images');
         $query->execute();
         return $query->fetchColumn();
+    }
+
+    public function getUserFromImageId(int $id)
+    {
+        $query = $this->db->getConnection()->prepare('SELECT img.*, u.email, u.receive_emails
+                                    FROM camagru.images img
+                                    LEFT JOIN users u ON u.id = img.user_id
+                                    WHERE img.id = :id');
+        $query->execute(['id' => $id]);
+        $image = $query->fetch(PDO::FETCH_ASSOC);
+        if (!$image) {
+            return null;
+        }
+        return $image;
     }
 }
