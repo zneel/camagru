@@ -22,19 +22,8 @@ services:
     volumes:
       - .:/camagru
     depends_on:
-      - php_init
       - mysql
     restart: unless-stopped
-
-  php_init:
-    build: ./docker/php
-    links:
-      - mysql
-    volumes:
-      - .:/camagru
-    depends_on:
-      - mysql
-    command: php /camagru/config/setup.php
 
   mysql:
     image: mysql:5.7

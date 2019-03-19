@@ -45,7 +45,7 @@ if (!isset($_SESSION)) {
                     </form>
                     <ul>
                         <?php
-                        if (isset($_SESSION['flash'])) {
+                        if (!empty($_SESSION['flash']['err'])) {
                             foreach ($_SESSION['flash']['err'] as $a) {
                                 foreach ($a as $k => $v) {
                                     echo '<li class="has-text-danger has-text-left-desktop">' . $v . '</li>';

@@ -48,12 +48,15 @@ function getImages($db, $limit, $offset)
                     </div>
                     <div class="content">
                         <div style="margin: 5px 0" class="level">
-                            <p style="margin: 0" class="level-left">{$row['username']}</p>
-                            <p class="has-text-right level-right">
-                                <a href="actions/likehandler.php?image_id={$row['id']}&user_id={$user_id}" class="button is-default"><i style="padding-right: 3px" class="fa fa-thumbs-up"></i> {$row['likes']}</a>
+                            <p style="margin: 0" class="level-left">Par: {$row['username']}</p>
+                            <p style="padding-right: 5px; padding-top: 5px" class="has-text-right level-right">
+                                <a href="actions/likehandler.php?image_id={$row['id']}&user_id={$user_id}" class="button is-primary"><i style="padding-right: 3px" class="fa fa-thumbs-up"></i> {$row['likes']}</a>
                             </p>
                         </div>
-                        <time datetime="2016-1-1">{$date->format('H:i:s l jS F Y')}</time>
+                        <p style="margin: 5px;" class="is-pulled-right">
+                            <a href="comment.php?id={$row['id']}" class=""><i style="padding-right: 3px" class="fas fa-comments"></i>Commentaires</a>
+                        </p>
+                        <time datetime="{$date->format('Y-MM-DD H:i')}">{$date->format('H:i:s l jS F Y')}</time>
                     </div>
                 </div>
             </div>
