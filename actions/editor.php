@@ -24,24 +24,28 @@ if (empty($_SESSION['user'])) {
  * @TODO: Check forms?
  */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
-    if ((!empty($_POST['webcamImage']) || !empty($_POST['fileUpload'])) && !empty($_POST['imageChoice'])) {
+    if ((!empty($_POST['webcamImage']) || !empty($_FILES)) && !empty($_POST['imageChoice'])) {
         $imageFile = null;
         if (!empty($_POST['webcamImage'])) {
             $imageFile = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
             $explode = explode(';base64', $_POST['webcamImage']);
             $decoded64 = base64_decode($explode[1]);
             file_put_contents($imageFile, $decoded64);
-        } else if (!empty($_POST['fileUpload'])) {
+        } else if ($_FILES["file"]["error"] != 0) {
+            echo "AKJSDHKAJHDKJHDASKJHDJKAHKDSJAHKASJHDKAHDKJA";
             $mimeTypes = ['png' => 'image/png',
                 'jpe' => 'image/jpeg',
                 'jpeg' => 'image/jpeg',
                 'jpg' => 'image/jpeg'];
-            if (in_array(mime_content_type($_POST['fileUpload']), $mimeTypes)) {
-                var_dump($_POST['fileUpload']);
+            if (in_array(mime_content_type($_FILES['tmp_name']), $mimeTypes)) {
+                var_dump($_FILES['tmp_name']);
                 die();
             }
         } else {
+            echo "ded";
+            die();
             header('Location: /editor.php');
+            exit();
         }
         $image = new Image();
         $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);

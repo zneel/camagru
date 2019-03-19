@@ -18,15 +18,16 @@ const turfu = (a) => {
                 imageList.children[i].classList.remove('has-background-danger')
             }
         }
-        const imageChoice = document.getElementById('imageChoice');
+    const imageChoice = document.getElementsByClassName('imageChoice');
+    imageChoice[0].value = a.src;
+    imageChoice[1].value = a.src;
         a.classList.add('has-background-danger');
-        imageChoice.value = a.src;
         allowCapture();
     }
 ;
 
 const snapshot = () => {
-    const imageChoice = document.getElementById('imageChoice');
+    const imageChoice = document.getElementsByClassName('imageChoice');
     const webcamImage = document.getElementById('webcamImage');
     const submitWebcam = document.getElementById('submitWebcam');
     if (imageChoice) {
