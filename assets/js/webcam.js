@@ -30,15 +30,15 @@ const snapshot = () => {
     const imageChoice = document.getElementsByClassName('imageChoice');
     const webcamImage = document.getElementById('webcamImage');
     const submitWebcam = document.getElementById('submitWebcam');
-    if (imageChoice) {
+    if ((imageChoice[0] !== undefined && imageChoice[0].value !== undefined) && webcamImage !== undefined && submitWebcam !== undefined) {
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext('2d');
         const reader = new FileReader();
         let img = new Image();
         let choiceImage = new Image();
-        choiceImage.src = imageChoice.value;
-        imageCapture.takePhoto()
-            .then(blob => {
+        choiceImage.src = imageChoice[0].value;
+        if (imageCapture !== undefined) {
+            imageCapture.takePhoto().then(blob => {
                 reader.readAsDataURL(blob);
                 reader.onloadend = () => {
                     webcamImage.value = reader.result;
@@ -52,7 +52,8 @@ const snapshot = () => {
                 submitWebcam.disabled = false;
                 img.src = URL.createObjectURL(blob);
             })
-            .catch(console.log);
+                .catch((e) => Math.random());
+        }
     }
 };
 

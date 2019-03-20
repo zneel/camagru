@@ -48,10 +48,10 @@ class ImageManager
         return $image;
     }
 
-    public function delete(Image $image)
+    public function delete(int $id)
     {
         $query = $this->db->getConnection()->prepare('DELETE FROM camagru.images WHERE id=:id');
-        $query->bindParam(':id', $image->getId(), PDO::PARAM_INT);
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
         $query->execute();
     }
 
@@ -91,6 +91,19 @@ class ImageManager
                                     WHERE img.id = :id');
         $query->execute(['id' => $id]);
         $image = $query->fetch(PDO::FETCH_ASSOC);
+        if (!$image) {
+            return null;
+        }
+        return $image;
+    }
+
+    public function getImagesByUserId(int $user_id)
+    {
+        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.images
+                                    WHERE camagru.images.user_id= :user_id
+                                    ORDER BY camagru.images.created_at DESC');
+        $query->execute(['user_id' => $user_id]);
+        $image = $query->fetchAll(PDO::FETCH_ASSOC);
         if (!$image) {
             return null;
         }

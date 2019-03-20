@@ -19,23 +19,23 @@ class RegisterForm extends FormValidator implements FormValidatorInterface
     public function validate(array $form)
     {
 
-        if (strcmp($form['password'], $form['cpassword']) != 0) {
+        if (!isset($form['cpassword']) || !isset($form['password']) || strcmp($form['password'], $form['cpassword']) != 0) {
             $this->setValid(false);
             $this->setErrors(['password' => ValidationErrors::PASSWORD_DIFFERENT]);
         }
-        if (strcmp($form['email'], $form['cemail']) != 0) {
+        if (!isset($form['email']) || !isset($form['cemail']) || strcmp($form['email'], $form['cemail']) != 0) {
             $this->setValid(false);
             $this->setErrors(['email' => ValidationErrors::EMAIL_DIFFERENT]);
         }
-        if (!preg_match('/^[a-zA-Z0-9]{2,13}$/', $form['username'])) {
+        if (!isset($form['username']) || !preg_match('/^[a-zA-Z0-9]{2,13}$/', $form['username'])) {
             $this->setValid(false);
             $this->setErrors(['username' => ValidationErrors::INVALID_USERNAME]);
         }
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,16}$/', $form['password'])) {
+        if (!isset($form['password']) || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,16}$/', $form['password'])) {
             $this->setValid(false);
             $this->setErrors(['password' => ValidationErrors::INVALID_PASSWORD]);
         }
-        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!isset($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
             $this->setValid(false);
             $this->setErrors(['email' => ValidationErrors::INVALID_EMAIL]);
         }

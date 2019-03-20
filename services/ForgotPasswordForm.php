@@ -17,7 +17,7 @@ class ForgotPasswordForm extends FormValidator implements FormValidatorInterface
 
     public function validate(array $form)
     {
-        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!isset($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
             $this->setValid(false);
             $this->setErrors(['email' => ValidationErrors::INVALID_EMAIL]);
         }

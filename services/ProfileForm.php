@@ -14,18 +14,18 @@ class ProfileForm extends FormValidator implements FormValidatorInterface
 {
     public function validate(array $form)
     {
-        if (!preg_match('/^[a-zA-Z0-9]{2,13}$/', $form['username'])) {
+        if (!isset($form['username']) || !preg_match('/^[a-zA-Z0-9]{2,13}$/', $form['username'])) {
             $this->setValid(false);
             $this->setErrors(['username' => ValidationErrors::INVALID_USERNAME]);
         }
-        if (!preg_match('/^(0|1)$/', (int)$form['receive_emails'])) {
+        if (!isset($form['receive_emails']) || !preg_match('/^(0|1)$/', (int)$form['receive_emails'])) {
             $this->setValid(false);
         }
-        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!isset($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
             $this->setValid(false);
             $this->setErrors(['email' => ValidationErrors::INVALID_EMAIL]);
         }
-        if (!$this->validatePassword($form['password'])) {
+        if (!isset($form['password']) || !$this->validatePassword($form['password'])) {
             $this->setValid(false);
             $this->setErrors(['password' => ValidationErrors::INVALID_PASSWORD]);
         }

@@ -35,9 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $_SESSION['user']['receive_emails'] = (int)$user->getReceive_Emails();
             header('Location: /profil.php');
             exit();
-        } else {
-            header('Location: /profil.php');
-            exit();
         }
     }
 }
+header('Location: /profil.php');
+exit();
