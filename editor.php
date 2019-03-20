@@ -5,14 +5,11 @@
  * Date: 2019-02-27
  * Time: 11:24
  */
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (empty($_SESSION['user'])) {
-    header('Location: /login.php');
-    exit();
-}
 
+require_once 'config/database.php';
+require_once 'models/ImageManager.php';
+require_once 'models/Db.php';
+$db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
 function getImages()
 {
     $dir = array_diff(scandir('./assets/filters'), array('..', '.', '.DS_Store'));
@@ -20,8 +17,38 @@ function getImages()
         echo <<< HTML
             <img onclick="turfu(this);" src="assets/filters/{$k}" alt="{$k}"</img>        
 HTML;
-
     }
+}
+
+function getMyImages($db, $user_id)
+{
+    if ($user_id !== null) {
+        $imageManager = new ImageManager($db);
+        $images = $imageManager->getImagesByUserId($user_id);
+        if (!empty($images)) {
+            foreach ($images as $key => $image) {
+                $image['path'] = str_replace("/camagru/", "", $image['path']);
+                echo <<< HTML
+                <div class="column">
+                 <figure class="image is-128x128">
+                    <div style="position: relative">
+                        <a style="position: absolute; left: 92%; bottom: 90%;" href="actions/delete_image.php?image_id={$image['id']}" class="delete is-medium"></a>
+                        <img class="img-responsive" src="{$image['path']}" alt="camagru-image">
+                    </div>
+                 </figure>
+                </div>
+HTML;
+            }
+        }
+    }
+}
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (empty($_SESSION['user'])) {
+    header('Location: /login.php');
+    exit();
 }
 
 ?>
@@ -115,6 +142,9 @@ HTML;
         </div>
         <div style="margin-bottom: 20px" class="column box">
             <h3 class="has-text-weight-bold">Mes photos:</h3>
+            <div class="columns is-multiline">
+                <?php getMyImages($db, $_SESSION['user']['id']) ?>
+            </div>
         </div>
     </div>
 </section>

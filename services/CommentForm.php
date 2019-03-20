@@ -15,11 +15,11 @@ class CommentForm extends FormValidator implements FormValidatorInterface
 
     public function validate(array $form)
     {
-        if (!preg_match('/\w\s*/', $form['comment'])) {
+        if (!isset($form['comment']) || !preg_match('/\w\s*/', $form['comment'])) {
             $this->setValid(false);
             $this->setErrors(['comment' => ValidationErrors::COMMENT_ERROR]);
         }
-        if (strlen($form['comment']) <= 0 || strlen($form['comment']) > 1000) {
+        if (!isset($form['comment']) || strlen($form['comment']) <= 0 || strlen($form['comment']) > 1000) {
             $this->setValid(false);
             $this->setErrors(['comment' => ValidationErrors::COMMENT_ERROR]);
         }
