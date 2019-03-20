@@ -8,8 +8,8 @@
 require_once 'config/database.php';
 require_once 'models/ImageManager.php';
 require_once 'models/Db.php';
-if (isset($_GET['page'])) {
-    $offset = intval($_GET['page']);
+if (isset($_GET['page']) && !is_string($_GET['page'])) {
+    $offset = intval(abs(intval($_GET['page'])));
 } else {
     $offset = 1;
 }
