@@ -41,7 +41,7 @@ HTML;
             } else {
                 echo <<<HTML
 <div class="navbar-end">
-                    <a class="navbar-item is-tab" href="/profile.php">
+                    <a class="navbar-item is-tab" href="/profil.php">
                     <i style="padding-right: 3px" class="fas fa-user-astronaut"></i>
 {$_SESSION['user']['username']}</a>
                     <a class="navbar-item is-tab" href="/logout.php">

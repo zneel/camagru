@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $_SESSION['user']['username'] = $user->getUsername();
             $_SESSION['user']['email'] = $user->getEmail();
             $_SESSION['user']['receive_emails'] = (int)$user->getReceive_Emails();
-            header('Location: /profile.php');
+            header('Location: /profil.php');
             exit();
         } else {
-            header('Location: /profile.php');
+            header('Location: /profil.php');
             exit();
         }
     }

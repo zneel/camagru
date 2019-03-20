@@ -23,7 +23,7 @@ $checkbox = $_SESSION['user']['receive_emails'] ? "<input  type=\"checkbox\" nam
     <div class="hero-body">
         <div class="container">
             <div class="column is-4 is-offset-4">
-                <h3 class="title has-text-grey">Profile</h3>
+                <h3 class="title has-text-grey">Profil</h3>
                 <?php
                 if (!empty($_SESSION['user'])) {
                     echo <<<HTML

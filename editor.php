@@ -91,6 +91,9 @@ HTML;
                                    accept="image/x-png,image/jpg,image/jpeg"
                                    name="fileUpload">
                             <span class="file-cta">
+                                <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
                                     <span class="file-label">
                                         Uploader une photo
                                     </span>
