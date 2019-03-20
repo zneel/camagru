@@ -19,7 +19,7 @@ if (!isset($_SESSION)) {
 }
 
 if (empty($_SESSION['user'])) {
-    header('Location: /index.php');
+    header('Location: /login.php');
     exit();
 }
 

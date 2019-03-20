@@ -9,7 +9,7 @@ if (!isset($_SESSION)) {
 <?php require 'navbar.php' ?>
 <header class="container">
     <div class="title has-text-centered">
-        <h1 class="has-text-white">Bienvenue sur le Camagru</h1>
+        <h1>Bienvenue sur le Camagru</h1>
     </div>
 </header>
 <section class="section">

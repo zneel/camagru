@@ -7,7 +7,7 @@ navigator.mediaDevices.getUserMedia({
     webCamStream = stream.getVideoTracks()[0];
     imageCapture = new ImageCapture(webCamStream);
     video.srcObject = stream;
-}).catch(console.log);
+}).catch((e) => Math.random());
 
 const allowCapture = () => document.getElementById("captureButton").disabled = false;
 

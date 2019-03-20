@@ -9,7 +9,7 @@ require_once 'config/database.php';
 require_once 'models/ImageManager.php';
 require_once 'models/Db.php';
 if (isset($_GET['page'])) {
-    $offset = $_GET['page'];
+    $offset = intval($_GET['page']);
 } else {
     $offset = 1;
 }
@@ -69,7 +69,7 @@ if (!isset($_SESSION)) {
 }
 ?>
 <div class="container">
-    <h2 class="subtitle has-text-centered has-text-white">Nos photos</h2>
+    <h2 class="subtitle has-text-centered">Nos photos</h2>
     <div class='columns is-multiline'>
         <?php
         getImages($db, $limit, $offset);
