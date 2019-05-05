@@ -17,8 +17,9 @@ class Image
 
     public function __construct(array $data = null)
     {
-        if (!empty($data))
+        if (!empty($data)) {
             $this->hydrate($data);
+        }
     }
 
     public function hydrate(array $data)
@@ -42,7 +43,7 @@ class Image
     /**
      * @param mixed $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -58,7 +59,7 @@ class Image
     /**
      * @param mixed $path
      */
-    public function setPath($path): void
+    public function setPath($path)
     {
         $this->path = $path;
     }
@@ -74,7 +75,7 @@ class Image
     /**
      * @param mixed $createdAt
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -90,7 +91,7 @@ class Image
     /**
      * @param mixed $user
      */
-    public function setUser($user): void
+    public function setUser($user)
     {
         $this->user = $user;
     }
