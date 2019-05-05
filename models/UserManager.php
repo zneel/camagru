@@ -32,20 +32,19 @@ class UserManager
                                      :email_hash, 
                                      :created_at, 
                                      :password_hash)');
-        $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
-        $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
-        $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $query->bindValue(':email_hash', $user->getEmail_Hash(), PDO::PARAM_STR);
-        $query->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':password_hash', $user->getPassword_Hash(), PDO::PARAM_STR);
-        $query->execute();
+            $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
+            $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
+            $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+            $query->bindValue(':email_hash', $user->getEmail_Hash(), PDO::PARAM_STR);
+            $query->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $query->bindValue(':password_hash', $user->getPassword_Hash(), PDO::PARAM_STR);
+            $query->execute();
         } catch (Exception $e) {
             die($e->getMessage());
         }
-        
     }
 
-    public function get(int $id): ?User 
+    public function get(int $id)
     {
         try {
             $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE id=:id');
@@ -58,7 +57,6 @@ class UserManager
         } catch (Exception $e) {
             die($e->getMessage());
         }
-        
     }
 
     public function delete(User $user)
@@ -67,25 +65,24 @@ class UserManager
             $query = $this->db->getConnection()->prepare('DELETE FROM camagru.users WHERE id=:id');
             $query->bindParam(':id', $user->getId(), PDO::PARAM_INT);
             $query->execute();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
-        
     }
 
     public function activateUser(string $username, string $emailHash)
     {
-        try{
+        try {
             $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET 
                          camagru.users.email_hash = NULL, 
                          camagru.users.verified_at = :verified_at 
                         WHERE camagru.users.username = :username
                         AND camagru.users.email_hash= :email_hash');
-        $query->bindValue(':verified_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':username', $username, PDO::PARAM_STR);
-        $query->bindValue(':email_hash', $emailHash, PDO::PARAM_STR);
-        $query->execute();
-        } catch(Exception $e) {
+            $query->bindValue(':verified_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $query->bindValue(':username', $username, PDO::PARAM_STR);
+            $query->bindValue(':email_hash', $emailHash, PDO::PARAM_STR);
+            $query->execute();
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
@@ -95,12 +92,12 @@ class UserManager
         try {
             $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users 
                                                                 WHERE camagru.users.username=:username');
-        $query->execute(['username' => $username]);
-        $user = $query->fetch(PDO::FETCH_ASSOC);
-        if (empty($user)) {
-            return null;
-        }
-        return new User($user);
+            $query->execute(['username' => $username]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            if (empty($user)) {
+                return null;
+            }
+            return new User($user);
         } catch (Exception $e) {
             die($e->getMessage());
         }
@@ -117,43 +114,43 @@ class UserManager
     {
         try {
             $user = $this->get($id);
-        $user->setUsername($values['username']);
-        if ($updatePwd) {
-            $user->setPassword($values['password']);
-        }
-        $user->setEmail($values['email']);
-        $user->setReceive_Emails($values['receive_emails'] == 'on' ? 1 : 0);
-        $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET
+            $user->setUsername($values['username']);
+            if ($updatePwd) {
+                $user->setPassword($values['password']);
+            }
+            $user->setEmail($values['email']);
+            $user->setReceive_Emails($values['receive_emails'] == 'on' ? 1 : 0);
+            $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET
                          camagru.users.username = :username,
                          camagru.users.email = :email,
                          camagru.users.password = :password,
                          camagru.users.receive_emails = :receive_emails
                         WHERE camagru.users.id = :id');
-        $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
-        $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
-        $query->bindValue(':receive_emails', $user->getReceive_Emails(), PDO::PARAM_STR);
-        $query->bindValue(':id', $user->getId(), PDO::PARAM_STR);
-        $query->execute();
-        return $this->get($id);
-        } catch(Exception $e) {
+            $query->bindValue(':username', $user->getUsername(), PDO::PARAM_STR);
+            $query->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+            $query->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
+            $query->bindValue(':receive_emails', $user->getReceive_Emails(), PDO::PARAM_STR);
+            $query->bindValue(':id', $user->getId(), PDO::PARAM_STR);
+            $query->execute();
+            return $this->get($id);
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
     public function getUserByEmail(string $email)
     {
-       try {
-        $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE email=:email');
-        $query->execute(['email' => $email]);
-        $user = $query->fetch(PDO::FETCH_ASSOC);
-        if (empty($user)) {
-            return null;
+        try {
+            $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users WHERE email=:email');
+            $query->execute(['email' => $email]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            if (empty($user)) {
+                return null;
+            }
+            return new User($user);
+        } catch (Exception $e) {
+            die($e->getMessage());
         }
-        return new User($user);
-       } catch (Exception $e){
-           die($e->getMessage());
-       }
     }
 
     public function generatePasswordHash(int $id, string $hash)
@@ -162,29 +159,29 @@ class UserManager
             $query = $this->db->getConnection()->prepare('UPDATE camagru.users SET 
                          camagru.users.password_hash = :hash
                         WHERE camagru.users.id = :id');
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
-        $query->bindValue(':hash', $hash, PDO::PARAM_STR);
-        $query->execute();
-        } catch(Exception $e) {
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->bindValue(':hash', $hash, PDO::PARAM_STR);
+            $query->execute();
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
     public function getUserByUsernameAndPasswordHash(string $username, string $hash)
     {
-       try {
+        try {
             $query = $this->db->getConnection()->prepare('SELECT * FROM camagru.users 
             WHERE username=:username
             AND password_hash=:password_hash');
-    $query->execute(['username' => $username, 'password_hash' => $hash]);
-    $user = $query->fetch(PDO::FETCH_ASSOC);
-    if (empty($user)) {
-    return null;
-    }
-    return new User($user);
-       }catch(Exception $e) {
-           die($e->getMessage());
-       }
+            $query->execute(['username' => $username, 'password_hash' => $hash]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            if (empty($user)) {
+                return null;
+            }
+            return new User($user);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     public function changePassword(User $user)

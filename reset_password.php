@@ -39,8 +39,8 @@ if (!isset($_SESSION)) {
                                 >
                             </div>
                         </div>
-                        <input type="hidden" name='username' value=<?php echo htmlspecialchars($_GET['login']) ?>>
-                        <input type="hidden" name='key' value=<?php echo htmlspecialchars($_GET['key']) ?>>
+                        <input type="hidden" name='username' value=<?php echo isset($_GET['username']) ? htmlspecialchars($_GET['username']) : "" ?>>
+                        <input type="hidden" name='key' value=<?php echo isset($_GET['key']) ? htmlspecialchars($_GET['key']) : "" ?>>
                         <button class="button is-block is-info  is-fullwidth">Reinitialiser le mot de passe</button>
                     </form>
                     <ul>

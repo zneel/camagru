@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if ($valid) {
         $auth = new Auth();
         $manager = new UserManager($db);
-        $user = $manager->getUserByEmail($_POST['email']);
+        $user = $manager->getUserByEmail($_POST['email']);  
         if (empty($user)) {
             $_SESSION['flash']['message'] = 'Un email vous a été envoyé';
             header('Location: /forgot_password.php');
