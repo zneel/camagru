@@ -18,7 +18,7 @@ class Auth
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    public function generateHash(): string
+    public function generateHash()
     {
         return bin2hex(random_bytes(32));
     }
@@ -34,8 +34,7 @@ class Auth
 Pour activer votre compte, veuillez cliquer sur le lien ci dessous
 ou copier/coller dans votre navigateur internet.
  
-http://' . $_SERVER['HTTP_HOST'] . '/activation.php?login=' . urlencode($user->getUsername()) . '&key=' . urlencode
-            ($user->getEmail_Hash()) . '
+http://' . $_SERVER['HTTP_HOST'] . '/activation.php?username=' . urlencode($user->getUsername()) . '&key=' . urlencode($user->getEmail_Hash()) . '
  
  
 ---------------
@@ -56,9 +55,8 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
 Pour reinitialiser votre mot de passe, veuillez cliquer sur le lien ci dessous
 ou copier/coller dans votre navigateur internet.
  
-http://' . $_SERVER['HTTP_HOST'] . '/reset_password.php?login=' . urlencode($user->getUsername()) . '&key=' .
-            urlencode
-            ($user->getPassword_Hash()) . '
+http://' . $_SERVER['HTTP_HOST'] . '/reset_password.php?username=' . urlencode($user->getUsername()) . '&key=' .
+            urlencode($user->getPassword_Hash()) . '
  
  
 ---------------

@@ -8,7 +8,7 @@
 
 include 'database.php';
 try {
-    $pdo = new PDO('mysql:host=127.0.0.1;dbname = ' . $DB_NAME . 'charset = utf8', $DB_USER, $DB_PASSWORD);
+    $pdo = new PDO('mysql:host='.$DB_DSN.';dbname = ' . $DB_NAME . 'charset = utf8', $DB_USER, $DB_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->query("use " . $DB_NAME);
     echo "\033[31mCreating tables... 🔥\033[0m\n";

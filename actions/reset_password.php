@@ -24,14 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $userManager = new UserManager($db);
             $auth = new Auth();
             $user = $userManager->getUserByUsernameAndPasswordHash(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['key']));
-            $user->setPassword($auth->hashPassword($_POST['password']));
-            $userManager->changePassword($user);
-            header('Location: /login.php');
-            exit();
+            if (isset($user)) {
+                $user->setPassword($auth->hashPassword($_POST['password']));
+                $userManager->changePassword($user);
+                header('Location: /login.php');
+                exit();
+            }
         } else {
             $_SESSION['flash'] = [];
             $_SESSION['flash']['err'] = $form->getErrors();
-            header(htmlspecialchars('Location: /reset_password.php?login=' . $_POST['username'] . '&key=' . $_POST['key']));
+            header(htmlspecialchars('Location: /reset_password.php?username=' . $_POST['username'] . '&key=' . $_POST['key']));
             exit();
         }
     }

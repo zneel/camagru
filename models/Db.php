@@ -27,7 +27,6 @@ class Db
         $this->host = $host;
         $this->dbName = $dbName;
         $this->password = $password;
-
     }
 
     /**

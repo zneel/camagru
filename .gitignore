@@ -7,3 +7,4 @@
 uploads/.DS_Store
 /db/*
 /docker/php/configs/.msmtprc
+.php_cs.cache

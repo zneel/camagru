@@ -24,7 +24,7 @@ abstract class FormValidator
     /**
      * @return bool
      */
-    public function isValid(): bool
+    public function isValid()
     {
         return $this->valid;
     }
@@ -32,7 +32,7 @@ abstract class FormValidator
     /**
      * @param bool $valid
      */
-    public function setValid(bool $valid): void
+    public function setValid(bool $valid)
     {
         $this->valid = $valid;
     }

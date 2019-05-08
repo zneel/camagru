@@ -25,7 +25,7 @@ class Comment
     /**
      * @param mixed $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -41,7 +41,7 @@ class Comment
     /**
      * @param mixed $comment
      */
-    public function setComment($comment): void
+    public function setComment($comment)
     {
         $this->comment = $comment;
     }
@@ -57,7 +57,7 @@ class Comment
     /**
      * @param mixed $created_at
      */
-    public function setCreatedAt($created_at): void
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
     }
@@ -73,7 +73,7 @@ class Comment
     /**
      * @param mixed $user
      */
-    public function setUser($user): void
+    public function setUser($user)
     {
         $this->user = $user;
     }
@@ -89,7 +89,7 @@ class Comment
     /**
      * @param mixed $image
      */
-    public function setImage($image): void
+    public function setImage($image)
     {
         $this->image = $image;
     }

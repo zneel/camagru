@@ -44,7 +44,7 @@ class User
     /**
      * @param mixed $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -61,7 +61,7 @@ class User
     /**
      * @param mixed $username
      */
-    public function setUsername($username): void
+    public function setUsername($username)
     {
         $this->username = $username;
     }
@@ -77,7 +77,7 @@ class User
     /**
      * @param mixed $password
      */
-    public function setPassword($password): void
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -93,7 +93,7 @@ class User
     /**
      * @param mixed $email
      */
-    public function setEmail($email): void
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -109,7 +109,7 @@ class User
     /**
      * @param mixed $verifiedAt
      */
-    public function setVerified_At($verifiedAt): void
+    public function setVerified_At($verifiedAt)
     {
         $this->verifiedAt = $verifiedAt;
     }
@@ -125,7 +125,7 @@ class User
     /**
      * @param mixed $emailHash
      */
-    public function setEmail_Hash($emailHash): void
+    public function setEmail_Hash($emailHash)
     {
         $this->emailHash = $emailHash;
     }
@@ -141,7 +141,7 @@ class User
     /**
      * @param mixed $passwordHash
      */
-    public function setPassword_Hash($passwordHash): void
+    public function setPassword_Hash($passwordHash)
     {
         $this->passwordHash = $passwordHash;
     }
@@ -157,7 +157,7 @@ class User
     /**
      * @param mixed $createdAt
      */
-    public function setCreated_At($createdAt): void
+    public function setCreated_At($createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -173,7 +173,7 @@ class User
     /**
      * @param mixed $receiveEmails
      */
-    public function setReceive_Emails($receiveEmails): void
+    public function setReceive_Emails($receiveEmails)
     {
         $this->receiveEmails = $receiveEmails;
     }

@@ -28,8 +28,11 @@ if (!isset($_SESSION)) {
                             <button class="button is-block is-info  is-fullwidth">Reinitialiser le mot de passe</button>
                         </form>
                         <?php
-                        $message = $_SESSION['flash']['message'];
-                        echo isset($message) ? '<p class="has-text-danger has-text-left-desktop">' . $message . '</p>' : '' ?>
+                        if (isset($_SESSION['flash']['message'])) {
+                            $message = $_SESSION['flash']['message'];
+                            echo isset($message) ? '<p class="has-text-danger has-text-left-desktop">' . $message . '</p>' : '';
+                        }
+                        ?>
                     </div>
                     <p class="has-text-grey">
                         <a href="/login.php">Connexion</a>

@@ -13,8 +13,8 @@ require_once 'services/Auth.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET)) {
     $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
     $userManager = new UserManager($db);
-    if (isset($_GET['login']) && isset($_GET['key'])) {
-        $userManager->activateUser($_GET['login'], $_GET['key']);
+    if (isset($_GET['username']) && isset($_GET['key'])) {
+        $userManager->activateUser($_GET['username'], $_GET['key']);
         header('Location: /login.php');
         exit();
     } else {

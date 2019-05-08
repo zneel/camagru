@@ -6,7 +6,11 @@
  * Time: 21:42
  */
 
-$DB_DSN = 'mysql:3306';
+if (!isset($_ENV['db'])) {
+  $DB_DSN = 'mysql:3306';
+} else {
+  $DB_DSN = $_ENV['db'].':3306';
+}
 $DB_NAME = 'camagru';
 $DB_USER = 'camagru';
 $DB_PASSWORD = 'camagru';
