@@ -69,23 +69,26 @@ $image['path'] = (str_replace($_SERVER['DOCUMENT_ROOT'], "", $image['path']));
         if (!empty($comments)) {
             foreach ($comments as $comment) {
                 $comment['comment'] = htmlentities($comment['comment']);
-                if (intval($comment['user_id']) == intval($_SESSION['user']['id'])) {
-                    echo <<< HTML
-                    <article class="media">
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>{$comment['username']}</strong>
-                                    <br>
-                                        {$comment['comment']}
-                                    <br>
-                                    <small><a href="actions/delete_comment.php?comment_id={$comment['id']}">Supprimer</a></small>
-                                </p>
+                if (isset($_SESSION['user'])) {
+                    if (intval($comment['user_id']) == intval($_SESSION['user']['id'])) {
+                        echo <<< HTML
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{$comment['username']}</strong>
+                                        <br>
+                                            {$comment['comment']}
+                                        <br>
+                                        <small><a href="actions/delete_comment.php?comment_id={$comment['id']}">Supprimer</a></small>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-HTML;
-                } else {
+                        </article>
+    HTML;
+                    } 
+                }
+                else {
                     echo <<< HTML
                     <article class="media">
                         <div class="media-content">

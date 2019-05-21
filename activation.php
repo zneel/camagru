@@ -18,8 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET)) {
         header('Location: /login.php');
         exit();
     } else {
-        // TODO: handle if user changing link; like redirect him.
-        var_dump($_GET);
-        die();
+        header('Location: /login.php');
+        exit();
     }
 }

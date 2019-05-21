@@ -17,8 +17,10 @@ function imageCreateFromFilename(string $filename, string $ext = null)
         throw new InvalidArgumentException('File "' . $filename . '" not found.');
     }
     if ($ext == null) {
-        $ext = end(explode(".", $filename));
+        $explode = explode(".", $filename);
+        $ext = end($explode);
     }
+    print($filename);
     switch ($ext) {
         case 'jpeg':
         case 'jpg':
@@ -36,6 +38,9 @@ function imageCreateFromFilename(string $filename, string $ext = null)
 function handleImage(string $tmp_path, string $ext = null)
 {
     $inputImage = imageCreateFromFilename($tmp_path, $ext);
+    if (!$inputImage) {
+        die("cannot create image from filename");
+    }
     list($w, $h) = getimagesize($tmp_path);
     if ($w > $h) {
         $new_height = 600;
@@ -82,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if ((!empty($_POST['webcamImage']) || !empty($_FILES)) && !empty($_POST['imageChoice'])) {
         $imageFile = null;
         if (!empty($_POST['webcamImage'])) {
+            print_r($_POST);
             $imageFile = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
             $explode = explode(';base64', $_POST['webcamImage']);
             $decoded64 = base64_decode($explode[1]);
@@ -95,7 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             if (in_array(mime_content_type($_FILES["fileUpload"]['tmp_name']), $mimeTypes)
                 && $_FILES["fileUpload"]['size'] <= 2000000) {
                 $name = $_FILES["fileUpload"]["name"];
-                $ext = strtolower(end(explode(".", $name)));
+                $explode = explode(".", $name);
+                $end = end($explode);
+                $ext = strtolower($end);
                 $outFinalPath = handleImage($_FILES['fileUpload']['tmp_name'], $ext);
             }
         } else {
@@ -112,5 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         header('Location: /index.php');
         exit();
     }
+    print_r($_POST);
     die();
 }

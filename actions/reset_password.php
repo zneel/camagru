@@ -14,7 +14,6 @@ require_once '../services/Auth.php';
 if (!isset($_SESSION)) {
     session_start();
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if (isset($_POST['username']) && isset($_POST['key'])) {
         $form = new ResetPasswordForm();
@@ -29,12 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
                 $userManager->changePassword($user);
                 header('Location: /login.php');
                 exit();
+            } else {
+                header("Location: /reset_password.php");
+                exit();                
             }
         } else {
             $_SESSION['flash'] = [];
             $_SESSION['flash']['err'] = $form->getErrors();
-            header(htmlspecialchars('Location: /reset_password.php?username=' . $_POST['username'] . '&key=' . $_POST['key']));
+            header('Location: /reset_password.php?username=' . htmlspecialchars($_POST['username']) . '&key=' . htmlspecialchars($_POST['key']));
             exit();
         }
+    } else {
+        header("Location: /login.php");
+        exit();
     }
 }

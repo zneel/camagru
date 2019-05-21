@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
 
             header('Location: /login.php');
             exit();
-        } catch (PDOException $e) {
+        } catch (\Exception $e) {
             if ($e->errorInfo[1] == 1062) {
                 $_SESSION['flash']['reg_err'] = [];
                 array_push($_SESSION['flash']['reg_err'], ['Email ou nom d\'uttilisateur déjà utilisé']);

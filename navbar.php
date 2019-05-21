@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
-                <img src="http://pluspng.com/img-png/letter-c-png-1600.png" alt="">
+                <img src="https://pluspng.com/img-png/letter-c-png-1600.png" alt="">
             </a>
             <a class="navbar-item" href="/">
                 Camagru

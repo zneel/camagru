@@ -20,7 +20,7 @@ if (empty($_SESSION['user'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET) && !is_string($_GET['page'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET) && isset($_GET['image_id'])) {
     $db = new Db($DB_DSN, $DB_NAME, $DB_USER, $DB_PASSWORD);
     $imageManager = new ImageManager($db);
     $image = $imageManager->get(intval(abs(intval($_GET['image_id']))));

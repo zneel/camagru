@@ -27,7 +27,7 @@ function getMyImages($db, $user_id)
         $images = $imageManager->getImagesByUserId($user_id);
         if (!empty($images)) {
             foreach ($images as $key => $image) {
-                $image['path'] = str_replace("/camagru/", "", $image['path']);
+                $image['path'] = str_replace("/var/www/camagru/", "", $image['path']);
                 echo <<< HTML
                 <div class="column">
                  <figure class="image is-128x128">
@@ -91,10 +91,10 @@ if (empty($_SESSION['user'])) {
                 <div id="webCamSide">
                     <h3 class="has-text-weight-bold">Webcam:</h3>
                     <figure class="img-responsive">
-                        <video id="video" autoplay></video>
+                        <video id="video" width="800" height="600" autoplay></video>
                     </figure>
                     <figure class="img-responsive">
-                        <canvas id="canvas"></canvas>
+                        <canvas id="canvas" width="800" height="600" ></canvas>
                     </figure>
                     <hr>
                     <button id="captureButton" class="button is-warning" onclick="snapshot();" disabled>Prendre une
