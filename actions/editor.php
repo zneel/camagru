@@ -20,7 +20,6 @@ function imageCreateFromFilename(string $filename, string $ext = null)
         $explode = explode(".", $filename);
         $ext = end($explode);
     }
-    print($filename);
     switch ($ext) {
         case 'jpeg':
         case 'jpg':
@@ -30,7 +29,7 @@ function imageCreateFromFilename(string $filename, string $ext = null)
             return imagecreatefrompng($filename);
             break;
         default:
-            throw new InvalidArgumentException('File "' . $filename . '" is not valid jpg, png or gif image.');
+            throw new InvalidArgumentException('File "' . $filename . '" is not valid jpg, png image.');
             break;
     }
 }
@@ -87,12 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
     if ((!empty($_POST['webcamImage']) || !empty($_FILES)) && !empty($_POST['imageChoice'])) {
         $imageFile = null;
         if (!empty($_POST['webcamImage'])) {
-            print_r($_POST);
             $imageFile = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . md5(time() . uniqid()) . ".jpg";
             $explode = explode(';base64', $_POST['webcamImage']);
             $decoded64 = base64_decode($explode[1]);
+            $ext = substr($explode[0], 11);
             file_put_contents($imageFile, $decoded64);
-            $outFinalPath = handleImage($imageFile);
+            $outFinalPath = handleImage($imageFile, $ext);
         } else if ($_FILES["fileUpload"]["error"] == 0) {
             $mimeTypes = ['png' => 'image/png',
                 'jpe' => 'image/jpeg',

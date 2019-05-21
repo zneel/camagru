@@ -26,6 +26,7 @@ const turfu = a => {
   a.classList.add("has-background-danger");
   allowCapture();
 };
+
 const snapshot = () => {
   const imageChoice = document.getElementsByClassName("imageChoice");
   const webcamImage = document.getElementById("webcamImage");
@@ -46,7 +47,7 @@ const snapshot = () => {
       ctx.drawImage(video, 0, 0, 800, 600);
       ctx.drawImage(choiceImage, 0, 0, 800, 600);
       submitWebcam.disabled = false;
-      const data = videoCanvas.toDataURL("image/png");
+      const data = videoCanvas.toDataURL("image/jpeg");
       webcamImage.setAttribute("value", data);
     }
   }
