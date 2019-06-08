@@ -8,7 +8,7 @@ navigator.mediaDevices
     video = document.querySelector("video");
     video.srcObject = stream;
   })
-  .catch(e => console.log(e));
+  .catch(e => Math.random());
 
 const allowCapture = () =>
   (document.getElementById("captureButton").disabled = false);

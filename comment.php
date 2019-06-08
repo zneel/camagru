@@ -69,8 +69,7 @@ $image['path'] = (str_replace($_SERVER['DOCUMENT_ROOT'], "", $image['path']));
         if (!empty($comments)) {
             foreach ($comments as $comment) {
                 $comment['comment'] = htmlentities($comment['comment']);
-                if (isset($_SESSION['user'])) {
-                    if (intval($comment['user_id']) == intval($_SESSION['user']['id'])) {
+                if (isset($_SESSION['user']) && intval($comment['user_id']) == intval($_SESSION['user']['id'])) {
                         echo <<< HTML
                         <article class="media">
                             <div class="media-content">
@@ -85,8 +84,7 @@ $image['path'] = (str_replace($_SERVER['DOCUMENT_ROOT'], "", $image['path']));
                                 </div>
                             </div>
                         </article>
-    HTML;
-                    } 
+HTML;
                 }
                 else {
                     echo <<< HTML
