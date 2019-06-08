@@ -8,8 +8,8 @@
 require_once 'config/database.php';
 require_once 'models/ImageManager.php';
 require_once 'models/Db.php';
-if (isset($_GET['page']) && !is_string($_GET['page'])) {
-    $offset = intval(abs(intval($_GET['page'])));
+if (isset($_GET['page']) && ctype_digit($_GET['page']) && $_GET['page'] != 0) {
+    $offset = abs(intval($_GET['page']));
 } else {
     $offset = 1;
 }
@@ -75,7 +75,7 @@ if (!isset($_SESSION)) {
     <h2 class="subtitle has-text-centered">Nos photos</h2>
     <div class='columns is-multiline'>
         <?php
-        getImages($db, $limit, $offset);
+            getImages($db, $limit, $offset);
         ?>
         <div class="column is-full">
             <nav class="pagination is-centered" role="navigation" aria-label="pagination">

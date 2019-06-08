@@ -73,7 +73,9 @@ class ImageManager
         $query->bindParam('limit', $limit, PDO::PARAM_INT);
         $query->bindParam('offset', $offset, PDO::PARAM_INT);
         $query->execute();
-        return $query;
+        return $query;   
+       
+ 
     }
 
     public function countImages()
