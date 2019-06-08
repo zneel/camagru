@@ -44,16 +44,12 @@ function handleImage(string $tmp_path, string $ext = null)
     if ($w > $h) {
         $new_height = 600;
         $new_width = floor($w * ($new_height / $h));
-        $crop_x = ceil(($w - $h) / 2);
-        $crop_y = 0;
     } else {
         $new_width = 800;
         $new_height = floor($h * ($new_width / $w));
-        $crop_x = 0;
-        $crop_y = ceil(($h - $w) / 2);
     }
     $outputImage = imagecreatetruecolor(800, 600);
-    imagecopyresampled($outputImage, $inputImage, 0, 0, $crop_x, $crop_y, $new_width, $new_height, $w, $h);
+    imagecopyresampled($outputImage, $inputImage, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
     $outImagePath = '/tmp/' . md5(time() . uniqid()) . ".jpg";
     imagejpeg($outputImage, $outImagePath);
     imagedestroy($outputImage);
@@ -92,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $ext = substr($explode[0], 11);
             file_put_contents($imageFile, $decoded64);
             $outFinalPath = handleImage($imageFile, $ext);
-        } else if ($_FILES["fileUpload"]["error"] == 0) {
+        } elseif ($_FILES["fileUpload"]["error"] == 0) {
             $mimeTypes = ['png' => 'image/png',
                 'jpe' => 'image/jpeg',
                 'jpeg' => 'image/jpeg',
@@ -119,6 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
         header('Location: /index.php');
         exit();
     }
-    print_r($_POST);
-    die();
+    header('Location: /editor.php');
+    exit();
 }

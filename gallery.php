@@ -38,6 +38,9 @@ function getImages($db, $limit, $offset)
         $date = new DateTime($row['created_at']);
         $user_id = !empty($_SESSION['user']) ? $_SESSION['user']['id'] : 0;
         $row['path'] = str_replace($_SERVER['DOCUMENT_ROOT'], "", $row['path']);
+        if (!file_exists($_SERVER['DOCUMENT_ROOT'].$row['path'])) {
+            $row["path"] = "https://i1.wp.com/www.ecommerce-nation.com/wp-content/uploads/2018/10/404-error.jpg?fit=800%2C600&ssl=1";
+        }
         echo <<<HTML
              <div class='column is-4'>
                 <div class="card">  

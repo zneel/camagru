@@ -27,13 +27,16 @@ function getMyImages($db, $user_id)
         $images = $imageManager->getImagesByUserId($user_id);
         if (!empty($images)) {
             foreach ($images as $key => $image) {
+                if (file_exists($_SERVER['DOCUMENT_ROOT'].$image['path'])) {
+                    $image["path"] = "https://i1.wp.com/www.ecommerce-nation.com/wp-content/uploads/2018/10/404-error.jpg?fit=800%2C600&ssl=1";
+                }
                 $image['path'] = str_replace("/var/www/camagru/", "", $image['path']);
                 echo <<< HTML
                 <div class="column">
-                 <figure class="image is-128x128">
+                 <figure class="image">
                     <div style="position: relative">
-                        <a style="position: absolute; left: 92%; bottom: 90%;" href="actions/delete_image.php?image_id={$image['id']}" class="delete is-medium"></a>
-                        <img class="img-responsive" src="{$image['path']}" alt="camagru-image">
+                        <a style="position: absolute; left: 97%; bottom: 95%;" href="actions/delete_image.php?image_id={$image['id']}" class="delete is-medium"></a>
+                        <img src="{$image['path']}" alt="camagru-image">
                     </div>
                  </figure>
                 </div>
@@ -94,7 +97,7 @@ if (empty($_SESSION['user'])) {
                         <video id="video" width="800" height="600" autoplay></video>
                     </figure>
                     <figure class="img-responsive">
-                        <canvas id="canvas" width="800" height="600" ></canvas>
+                        <canvas id="canvas" width="800" height="600"></canvas>
                     </figure>
                     <hr>
                     <button id="captureButton" class="button is-warning" onclick="snapshot();" disabled>Prendre une
@@ -128,7 +131,7 @@ if (empty($_SESSION['user'])) {
                         </label>
                     </div>
                     <input type="hidden" name="imageChoice" class="imageChoice" hidden>
-                    <button id="submitUpload" style="margin: 10px 0" class="button is-primary"
+                    <button id="submitUpload" disabled style="margin: 10px 0" class="button is-primary"
                             type="submit">Envoyer mon montage
                     </button>
                 </form>
